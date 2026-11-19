@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Bàn Phong Thủy</title>
+<meta name="theme-color" content="#130e0a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="La Bàn">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700&family=Be+Vietnam+Pro:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600&display=swap&text=%E5%AD%90%E7%99%B8%E4%B8%91%E8%89%AE%E5%AF%85%E7%94%B2%E5%8D%AF%E4%B9%99%E8%BE%B0%E5%B7%BD%E5%B7%B3%E4%B8%99%E5%8D%88%E4%B8%81%E6%9C%AA%E5%9D%A4%E7%94%B3%E5%BA%9A%E9%85%89%E8%BE%9B%E6%88%8C%E4%B9%BE%E4%BA%A5%E5%A3%AC%E5%9D%8E%E9%9C%87%E9%9B%A2%E5%85%8C%E7%BE%85%E7%B6%93%E6%97%A5%E6%93%87%E5%91%BD">
+<style>
+:root{
+  color-scheme: dark;
+  --lacquer:#130e0a;
+  --panel:#1c1510;
+  --panel-2:#251c15;
+  --line:#3a2d22;
+  --gold:#d8ab52;
+  --gold-dim:#a9843f;
+  --cinnabar:#c0392b;
+  --egg:#f0e6cf;
+  --muted:#a99a82;
+  --good:#8cc79f;
+  --bad:#ec7b67;
+  --mid:#d4b67c;
+  --f-display:'Alegreya', Georgia, 'Times New Roman', serif;
+  --f-body:'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --f-han:'Noto Serif TC', 'Songti TC', 'STSong', 'PMingLiU', serif;
+  /* Bố cục: một cột ~640px. La bàn sơn mài son – vàng là tâm điểm; các khối như tấm sơn mài viền chỉ vàng. */
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--lacquer);background-image:radial-gradient(130% 55% at 50% -8%,#2b1d12 0%,rgba(19,14,10,0) 62%);color:var(--egg);font:400 15px/1.55 var(--f-body)}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px 48px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 0 10px}
+h1{margin:0;font:700 30px/1.05 var(--f-display);color:var(--gold);text-wrap:balance}
+.sub{margin:5px 0 0;color:var(--muted);font-size:13px}
+.seal{flex:none;font:600 16px/1.1 var(--f-han);color:var(--cinnabar);border:1.6px solid var(--cinnabar);border-radius:3px;padding:5px 3px;writing-mode:vertical-rl;letter-spacing:.08em;transform:rotate(-3deg)}
+.tabs{position:sticky;top:0;z-index:10;display:grid;grid-template-columns:repeat(4,1fr);margin:0 -16px 14px;padding:0 6px;background:rgba(19,14,10,.94);border-bottom:1px solid var(--line);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.tab{-webkit-appearance:none;appearance:none;background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);font:500 12.5px/1.2 var(--f-body);padding:9px 2px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+.tab .h{font:600 19px/1 var(--f-han)}
+.tab[aria-selected="true"]{color:var(--gold);border-bottom-color:var(--gold)}
+.tab:focus-visible{outline:2px solid var(--gold);outline-offset:-3px}
+.view{display:grid;gap:12px}
+.view[hidden]{display:none}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;box-shadow:inset 0 0 0 1px rgba(216,171,82,.04);min-width:0}
+.card h2{margin:0 0 10px;font:700 19px/1.2 var(--f-display);color:var(--gold);text-wrap:balance}
+.card h3{margin:14px 0 6px;font:600 14px/1.3 var(--f-body);color:var(--egg)}
+.muted{color:var(--muted)}
+.small{font-size:12.5px}
+.hint{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+b,strong{font-weight:600}
+p{margin:0}
+.pill{display:inline-flex;align-items:center;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;line-height:1.5;border:1px solid currentColor;white-space:nowrap}
+.pill.good{color:var(--good);background:rgba(140,199,159,.09)}
+.pill.bad{color:var(--bad);background:rgba(236,123,103,.09)}
+.pill.mid{color:var(--mid);background:rgba(212,182,124,.09)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;padding:2px 8px;border-radius:6px;background:var(--panel-2);border:1px solid var(--line);color:var(--egg)}
+.chip.g{border-color:rgba(140,199,159,.5);color:var(--good)}
+.chip.b{border-color:rgba(236,123,103,.5);color:var(--bad)}
+.btn{-webkit-appearance:none;appearance:none;font:500 14px/1 var(--f-body);color:var(--egg);background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:0 12px;min-height:40px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
+.btn:hover{border-color:var(--gold-dim)}
+.btn.primary{background:var(--cinnabar);border-color:var(--cinnabar);color:#fff7ea;font-weight:600}
+.btn.ghost{background:transparent}
+.btn.sm{min-height:32px;font-size:13px;padding:0 10px}
+.btn:focus-visible,input:focus-visible,select:focus-visible,.cell:focus-visible,.seg button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+input[type=number],input[type=date],select{font:400 15px/1.2 var(--f-body);color:var(--egg);background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:0 10px;min-height:40px;min-width:0;width:100%}
+input[type=date]::-webkit-calendar-picker-indicator{filter:invert(.85)}
+input[type=range]{width:100%;accent-color:var(--gold);margin:14px 0 0}
+.form{display:grid;grid-template-columns:auto 1fr;gap:10px 12px;align-items:center}
+.form label,.form .lbl{font-size:13.5px;color:var(--muted)}
+.form .full{grid-column:1 / -1}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--egg)}
+.chk input{width:18px;height:18px;accent-color:var(--gold);margin:0}
+.seg{display:inline-grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden;justify-self:start}
+.seg button{-webkit-appearance:none;appearance:none;border:0;background:var(--panel-2);color:var(--muted);font:500 14px var(--f-body);padding:0 18px;min-height:38px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--gold);color:#1a120b;font-weight:600}
+/* La bàn */
+.dial-cap{text-align:center;font-size:11px;letter-spacing:.16em;font-weight:600;color:var(--cinnabar)}
+.dial-wrap{width:min(100%,460px);margin:2px auto}
+#dial{display:block;width:100%;height:auto;touch-action:none;-webkit-user-select:none;user-select:none;cursor:grab}
+#dial:active{cursor:grabbing}
+#dial .tk{stroke:var(--gold-dim);stroke-width:.6}
+#dial .tk.b{stroke:var(--gold);stroke-width:1.3}
+#dial .dn{fill:var(--muted);font:500 8.5px var(--f-body)}
+#dial .ring{fill:none;stroke:var(--gold);stroke-width:1}
+#dial .sec{stroke:rgba(216,171,82,.35);stroke-width:.6}
+#dial .sec.chi{fill:rgba(192,57,43,.34)}
+#dial .sec.can{fill:rgba(0,0,0,.22)}
+#dial .han{fill:var(--egg);font:600 15px var(--f-han)}
+#dial .sn{fill:var(--gold);font:600 8px var(--f-body)}
+#dial .yao{stroke:var(--gold);stroke-width:3.2}
+#dial .qn{fill:var(--egg);font:500 8.5px var(--f-body)}
+#dial .div{stroke:rgba(216,171,82,.45);stroke-width:.7}
+#dial .dir{fill:var(--muted);font:500 8.4px var(--f-body)}
+#dial .dir.m{fill:var(--egg);font-weight:600}
+#dial .bt{stroke:rgba(216,171,82,.28);stroke-width:.6}
+#dial .bt.g{fill:rgba(140,199,159,.22)}
+#dial .bt.b{fill:rgba(236,123,103,.17)}
+#dial .bt.n{fill:rgba(240,230,207,.03)}
+#dial .btt{font:600 7px var(--f-body)}
+#dial .btt.g{fill:var(--good)}
+#dial .btt.b{fill:var(--bad)}
+#dial .thread{stroke:var(--cinnabar);stroke-width:.9}
+#dial .ptr{fill:var(--cinnabar)}
+#dial .mk{stroke:var(--lacquer);stroke-width:1.4}
+#dial .mk.hy{fill:var(--gold)}
+#dial .mk.tai{fill:var(--good)}
+#dial .mk.hac{fill:var(--bad)}
+.readout{display:flex;gap:16px;align-items:center}
+.deg{font:700 46px/1 var(--f-display);color:var(--egg);font-variant-numeric:tabular-nums;min-width:3.2ch}
+.rd-main{font-size:16px}
+.rd-main b{color:var(--gold)}
+.notes{display:grid;gap:8px;margin:12px 0}
+.notes:empty{display:none}
+.note{font-size:13.5px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ctrl input[type=number]{width:84px;text-align:center;font-variant-numeric:tabular-nums}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12.5px;color:var(--muted);margin-top:10px}
+.sw{display:inline-block;flex:none;width:10px;height:10px;border-radius:50%}
+.sw.hy{background:var(--gold)}
+.sw.tai{background:var(--good)}
+.sw.hac{background:var(--bad)}
+.legend .sw{margin-right:6px;vertical-align:-1px}
+.dirrow{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
+.dirrow:first-child{border-top:0;padding-top:0}
+.dirrow .what{font-size:13px;color:var(--muted)}
+.dirrow .what b{display:block;font-size:15px;color:var(--egg)}
+.daystrip{margin:12px 0 0;padding-top:10px;border-top:1px solid var(--line);font-size:13.5px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.steps{margin:0;padding-left:20px;display:grid;gap:6px;font-size:14px}
+/* Xem ngày */
+.datebar{display:grid;grid-template-columns:auto 1fr auto auto;gap:8px}
+.hero-day{display:grid;grid-template-columns:1fr 1fr;text-align:center}
+.hero-day .col{padding:4px 6px;min-width:0}
+.hero-day .col + .col{border-left:1px solid var(--line)}
+.lab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.big{font:700 68px/1 var(--f-display);font-variant-numeric:tabular-nums;margin:4px 0 2px}
+.lunar .big{color:var(--gold)}
+.cc{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--line);text-align:center;font-size:14.5px}
+.cc b{color:var(--gold)}
+.verdict{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:10px}
+.calhead{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;margin-bottom:6px}
+.calhead h2{margin:0;text-align:center}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal .wd{text-align:center;font-size:11px;color:var(--muted);padding:2px 0 4px}
+.cell{-webkit-appearance:none;appearance:none;font:inherit;color:var(--egg);background:transparent;border:1px solid transparent;border-radius:7px;padding:5px 0 4px;min-height:52px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;min-width:0}
+.cell .s{font-size:15px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.2}
+.cell .l{font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums;line-height:1.2}
+.cell .l.m1{color:#f0a48f;font-weight:600}
+.cell .dot{width:5px;height:5px;border-radius:50%;margin-top:2px}
+.cell.hd .dot{background:var(--gold)}
+.cell.ky .s{text-decoration:underline;text-decoration-color:var(--bad);text-decoration-thickness:2px;text-underline-offset:3px}
+.cell.sun .s{color:#f0a48f}
+.cell.out{opacity:.32}
+.cell.today{border-color:var(--gold-dim)}
+.cell[aria-pressed="true"]{background:var(--panel-2);border-color:var(--gold)}
+dl.kv{display:grid;grid-template-columns:104px 1fr;gap:10px 12px;margin:0}
+dl.kv dt{font-size:13px;color:var(--muted);padding-top:1px}
+dl.kv dd{margin:0;min-width:0}
+.desc{display:block;font-size:13px;color:var(--muted);margin-top:3px}
+.hours{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.hr{border:1px solid var(--line);background:var(--panel-2);border-radius:8px;padding:7px 9px;min-width:0}
+.hr.g{border-color:rgba(216,171,82,.6);background:rgba(216,171,82,.08)}
+.hr.now{box-shadow:0 0 0 2px var(--cinnabar)}
+.hr .c{font-weight:600;font-size:14.5px}
+.hr.g .c{color:var(--gold)}
+.hr .t{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.hr .n{font-size:12px}
+.list{display:grid}
+.li{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:10px 0;border-top:1px solid var(--line);align-items:center}
+.li:first-child{border-top:0;padding-top:2px}
+.li .sub2{grid-column:1 / -1;font-size:13px;color:var(--muted)}
+.conv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+/* Chọn ngày */
+.pick{display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:start;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px}
+.pick.top{border-color:rgba(216,171,82,.6)}
+.pd{text-align:center;border-right:1px solid var(--line);padding-right:10px}
+.pd .n1{font:700 30px/1 var(--f-display);color:var(--gold);font-variant-numeric:tabular-nums}
+.pd .n2{font-size:11.5px;color:var(--muted);margin-top:3px}
+.pt{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;justify-content:space-between}
+.ph{font-size:12.5px;color:var(--muted);margin-top:8px}
+/* Tuổi */
+.grid9{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.g9{border-radius:8px;padding:8px 4px;text-align:center;border:1px solid var(--line);min-height:62px;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0}
+.g9 .d{font-size:11.5px;color:var(--muted)}
+.g9 .st{font-weight:600;font-size:13.5px}
+.g9.g{background:rgba(140,199,159,.10);border-color:rgba(140,199,159,.45)}
+.g9.g .st{color:var(--good)}
+.g9.b{background:rgba(236,123,103,.08);border-color:rgba(236,123,103,.35)}
+.g9.b .st{color:var(--bad)}
+.g9.c{background:var(--panel-2)}
+.g9.c .hz{font:600 22px/1 var(--f-han);color:var(--gold)}
+.banner{margin-top:12px;padding:8px 10px;border-radius:8px;border:1px dashed var(--gold-dim);font-size:13px;color:var(--mid)}
+.banner:empty{display:none}
+.foot{margin-top:22px;font-size:12px;color:var(--muted);line-height:1.6}
+@media (max-width:380px){.big{font-size:56px}dl.kv{grid-template-columns:88px 1fr}.deg{font-size:40px}}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>La Bàn Phong Thủy</h1>
+      <p class="sub" id="todayLine"></p>
+    </div>
+    <div class="seal" aria-hidden="true">羅經</div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Chức năng">
+    <button class="tab" role="tab" type="button" id="t-la-ban" data-tab="la-ban" aria-controls="v-la-ban" aria-selected="true"><span class="h" aria-hidden="true">羅</span>La bàn</button>
+    <button class="tab" role="tab" type="button" id="t-xem-ngay" data-tab="xem-ngay" aria-controls="v-xem-ngay" aria-selected="false"><span class="h" aria-hidden="true">日</span>Xem ngày</button>
+    <button class="tab" role="tab" type="button" id="t-chon-ngay" data-tab="chon-ngay" aria-controls="v-chon-ngay" aria-selected="false"><span class="h" aria-hidden="true">擇</span>Chọn ngày</button>
+    <button class="tab" role="tab" type="button" id="t-tuoi-huong" data-tab="tuoi-huong" aria-controls="v-tuoi-huong" aria-selected="false"><span class="h" aria-hidden="true">命</span>Tuổi &amp; hướng</button>
+  </nav>
+
+  <main>
+    <!-- LA BÀN -->
+    <section class="view" id="v-la-ban" role="tabpanel" aria-labelledby="t-la-ban">
+      <div>
+        <div class="dial-cap">▼ HƯỚNG · MẶT NHÌN RA</div>
+        <div class="dial-wrap"><svg id="dial" viewBox="-214 -214 428 428" role="img" aria-label="Mặt la bàn: 360 độ, 24 sơn, bát quái, 8 hướng"></svg></div>
+        <div class="dial-cap">▲ TỌA · LƯNG DỰA VÀO</div>
+      </div>
+      <div class="card">
+        <div class="readout">
+          <div class="deg" id="degNum" aria-live="polite">0°</div>
+          <div><div class="rd-main" id="rdMain"></div><div class="muted small" id="rdToa"></div></div>
+        </div>
+        <div class="notes" id="rdNotes"></div>
+        <div class="ctrl">
+          <button class="btn primary" type="button" id="sensorBtn">Bật cảm biến la bàn</button>
+          <button class="btn" type="button" data-step="-15" aria-label="Xoay trái 15 độ">−15°</button>
+          <button class="btn" type="button" data-step="-1" aria-label="Xoay trái 1 độ">−1°</button>
+          <input type="number" id="degInput" min="0" max="359" step="1" inputmode="numeric" aria-label="Số độ hướng">
+          <button class="btn" type="button" data-step="1" aria-label="Xoay phải 1 độ">+1°</button>
+          <button class="btn" type="button" data-step="15" aria-label="Xoay phải 15 độ">+15°</button>
+        </div>
+        <input type="range" id="degRange" min="0" max="359" step="1" aria-label="Xoay mặt la bàn">
+        <p class="hint" id="sensorMsg">Kéo xoay mặt la bàn, hoặc đọc số độ trên ứng dụng La bàn của điện thoại rồi nhập vào ô số.</p>
+        <div class="banner" id="frameNote" hidden></div>
+      </div>
+      <div class="card">
+        <h2 id="dirTitle">Hướng tốt hôm nay</h2>
+        <div id="dayDirs"></div>
+        <div class="daystrip" id="dayStrip"></div>
+      </div>
+      <div class="card" id="myDirs"></div>
+      <div class="card">
+        <h2>Cách đo hướng</h2>
+        <ol class="steps">
+          <li><b>Hướng nhà:</b> đứng ngay cửa chính, lưng quay vào nhà, mặt nhìn thẳng ra ngoài. Mũi tên đỏ chỉ hướng nhà, phía lưng là tọa.</li>
+          <li><b>Hướng bàn thờ:</b> đứng sát trước bàn thờ, lưng quay vào bàn thờ, nhìn thẳng ra phía trước.</li>
+          <li><b>Hướng cúng, xuất hành:</b> xoay người tới khi chấm vàng (Hỷ thần) hoặc chấm xanh (Tài thần) nằm dưới mũi tên đỏ.</li>
+          <li>Cầm máy nằm ngang, tránh xa xe máy, cột sắt, loa. Nên đo hai ba lần ở các vị trí khác nhau.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- XEM NGÀY -->
+    <section class="view" id="v-xem-ngay" role="tabpanel" aria-labelledby="t-xem-ngay" hidden>
+      <div class="datebar">
+        <button class="btn" type="button" id="prevDay" aria-label="Ngày trước">‹</button>
+        <input type="date" id="dateInput" min="1900-01-01" max="2100-12-31" aria-label="Chọn ngày dương lịch">
+        <button class="btn" type="button" id="nextDay" aria-label="Ngày sau">›</button>
+        <button class="btn ghost" type="button" id="todayBtn">Hôm nay</button>
+      </div>
+      <div class="card" id="dayHero"></div>
+      <div class="card">
+        <div class="calhead">
+          <button class="btn ghost sm" type="button" id="prevMonth" aria-label="Tháng trước">‹</button>
+          <h2 id="calTitle"></h2>
+          <button class="btn ghost sm" type="button" id="nextMonth" aria-label="Tháng sau">›</button>
+        </div>
+        <div class="cal" id="cal"></div>
+        <div class="legend"><span><span class="sw hy"></span>Ngày hoàng đạo</span><span>Gạch đỏ dưới số: Tam Nương, Nguyệt Kỵ, Dương Công</span></div>
+      </div>
+      <div class="card" id="dayDetail"></div>
+      <div class="card" id="dayHours"></div>
+      <div class="card" id="dayLTP"></div>
+      <div class="card" id="dayUpcoming"></div>
+      <div class="card">
+        <h2>Đổi ngày âm sang dương</h2>
+        <div class="conv">
+          <input type="number" id="cvD" min="1" max="30" inputmode="numeric" placeholder="Ngày" aria-label="Ngày âm lịch">
+          <input type="number" id="cvM" min="1" max="12" inputmode="numeric" placeholder="Tháng" aria-label="Tháng âm lịch">
+          <input type="number" id="cvY" min="1900" max="2100" inputmode="numeric" placeholder="Năm" aria-label="Năm âm lịch">
+        </div>
+        <div class="ctrl" style="margin-top:10px">
+          <label class="chk" for="cvL"><input type="checkbox" id="cvL">Tháng nhuận</label>
+          <button class="btn primary" type="button" id="cvGo">Đổi ngày</button>
+        </div>
+        <p class="hint" id="cvOut">Dùng để tra ngày giỗ, ngày rằm sang lịch dương.</p>
+      </div>
+    </section>
+
+    <!-- CHỌN NGÀY -->
+    <section class="view" id="v-chon-ngay" role="tabpanel" aria-labelledby="t-chon-ngay" hidden>
+      <div class="card">
+        <h2>Tìm ngày tốt cho việc</h2>
+        <div class="form">
+          <label for="actSel">Việc cần làm</label>
+          <select id="actSel"></select>
+          <label for="fromDate">Bắt đầu từ</label>
+          <input type="date" id="fromDate" min="1900-01-01" max="2100-12-31">
+          <label for="rangeSel">Trong vòng</label>
+          <select id="rangeSel"><option value="30">30 ngày</option><option value="60">60 ngày</option><option value="90">90 ngày</option></select>
+          <label class="chk full" for="useProf"><input type="checkbox" id="useProf"><span>Tính cả tuổi gia chủ <span class="muted" id="profLabel"></span></span></label>
+        </div>
+        <p class="hint">Điểm cộng từ ngày hoàng đạo, sao tốt, trực hợp việc, hợp tuổi. Điểm trừ từ hắc đạo, sao xấu, trực kỵ việc, Tam Nương, Nguyệt Kỵ, Dương Công, xung tuổi.</p>
+      </div>
+      <div id="pickSummary" class="muted"></div>
+      <div id="pickList" class="view"></div>
+    </section>
+
+    <!-- TUỔI & HƯỚNG -->
+    <section class="view" id="v-tuoi-huong" role="tabpanel" aria-labelledby="t-tuoi-huong" hidden>
+      <div class="card">
+        <h2>Thông tin gia chủ</h2>
+        <form id="ageForm" class="form" novalidate>
+          <label for="byear">Năm sinh âm lịch</label>
+          <input type="number" id="byear" min="1900" max="2100" inputmode="numeric">
+          <label for="bdate">Hoặc ngày sinh dương lịch</label>
+          <input type="date" id="bdate" min="1900-01-01" max="2100-12-31">
+          <span class="lbl">Giới tính</span>
+          <div class="seg" role="group" aria-label="Giới tính"><button type="button" id="gNam" data-g="nam" aria-pressed="true">Nam</button><button type="button" id="gNu" data-g="nu" aria-pressed="false">Nữ</button></div>
+          <label for="vyear">Năm cần xem</label>
+          <input type="number" id="vyear" min="1900" max="2100" inputmode="numeric">
+          <button class="btn primary full" type="submit" id="saveProf">Lưu, dùng cho la bàn và chọn ngày</button>
+        </form>
+        <p class="hint">Sinh trước Tết âm lịch thì tính năm trước. Ví dụ sinh ngày 20/1/1991 dương lịch, trước Tết Tân Mùi, là tuổi Canh Ngọ 1990. Nhập ngày sinh dương lịch để tự đổi.</p>
+        <div class="banner" id="ageBanner"></div>
+      </div>
+      <div id="ageOut" class="view"></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    Công cụ tham khảo theo lịch vạn sự dân gian. Âm lịch tính theo thuật toán thiên văn của Hồ Ngọc Đức, giờ Việt Nam (UTC+7). Ngày hoàng đạo xét theo tháng âm lịch, 12 trực xét theo tiết khí. Các sách lịch có thể khác nhau ở một số chi tiết.
+  </footer>
+</div>
+
+<script>
+/* ===== Bộ tính: âm lịch Việt Nam (thuật toán Hồ Ngọc Đức, giờ UTC+7) và lịch vạn sự dân gian ===== */
+var FS = (function () {
+  'use strict';
+  var PI = Math.PI, INT = Math.floor, TZ = 7.0;
+
+  var CAN = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'];
+  var CHI = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
+  var GIAP = ['Chuột', 'Trâu', 'Hổ', 'Mèo', 'Rồng', 'Rắn', 'Ngựa', 'Dê', 'Khỉ', 'Gà', 'Chó', 'Lợn'];
+  var THU = ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'];
+  var THANG_AM = ['Giêng', 'Hai', 'Ba', 'Tư', 'Năm', 'Sáu', 'Bảy', 'Tám', 'Chín', 'Mười', 'Mười một', 'Chạp'];
+  var TIETKHI = ['Xuân phân', 'Thanh minh', 'Cốc vũ', 'Lập hạ', 'Tiểu mãn', 'Mang chủng', 'Hạ chí', 'Tiểu thử',
+    'Đại thử', 'Lập thu', 'Xử thử', 'Bạch lộ', 'Thu phân', 'Hàn lộ', 'Sương giáng', 'Lập đông', 'Tiểu tuyết',
+    'Đại tuyết', 'Đông chí', 'Tiểu hàn', 'Đại hàn', 'Lập xuân', 'Vũ thủy', 'Kinh trập'];
+
+  var DIR8 = ['Bắc', 'Đông Bắc', 'Đông', 'Đông Nam', 'Nam', 'Tây Nam', 'Tây', 'Tây Bắc'];
+  var QUAI8 = ['Khảm', 'Cấn', 'Chấn', 'Tốn', 'Ly', 'Khôn', 'Đoài', 'Càn'];
+  var QUAI_HAN = ['坎', '艮', '震', '巽', '離', '坤', '兌', '乾'];
+  var QUAI_HANH = ['Thủy', 'Thổ', 'Mộc', 'Mộc', 'Hỏa', 'Thổ', 'Kim', 'Kim'];
+  var TRIGRAM = [[0, 1, 0], [0, 0, 1], [1, 0, 0], [0, 1, 1], [1, 0, 1], [0, 0, 0], [1, 1, 0], [1, 1, 1]]; // hào dưới → trên
+  var SON24 = [['Tý', '子'], ['Quý', '癸'], ['Sửu', '丑'], ['Cấn', '艮'], ['Dần', '寅'], ['Giáp', '甲'], ['Mão', '卯'],
+    ['Ất', '乙'], ['Thìn', '辰'], ['Tốn', '巽'], ['Tỵ', '巳'], ['Bính', '丙'], ['Ngọ', '午'], ['Đinh', '丁'], ['Mùi', '未'],
+    ['Khôn', '坤'], ['Thân', '申'], ['Canh', '庚'], ['Dậu', '酉'], ['Tân', '辛'], ['Tuất', '戌'], ['Càn', '乾'], ['Hợi', '亥'],
+    ['Nhâm', '壬']];
+
+  /* ---------- Thiên văn & âm lịch ---------- */
+  function jdFromDate(dd, mm, yy) {
+    var a = INT((14 - mm) / 12), y = yy + 4800 - a, m = mm + 12 * a - 3;
+    var jd = dd + INT((153 * m + 2) / 5) + 365 * y + INT(y / 4) - INT(y / 100) + INT(y / 400) - 32045;
+    if (jd < 2299161) jd = dd + INT((153 * m + 2) / 5) + 365 * y + INT(y / 4) - 32083;
+    return jd;
+  }
+  function jdToDate(jd) {
+    var a, b, c;
+    if (jd > 2299160) { a = jd + 32044; b = INT((4 * a + 3) / 146097); c = a - INT((b * 146097) / 4); }
+    else { b = 0; c = jd + 32082; }
+    var d = INT((4 * c + 3) / 1461), e = c - INT((1461 * d) / 4), m = INT((5 * e + 2) / 153);
+    return [e - INT((153 * m + 2) / 5) + 1, m + 3 - 12 * INT(m / 10), b * 100 + d - 4800 + INT(m / 10)];
+  }
+  function newMoon(k) {
+    var T = k / 1236.85, T2 = T * T, T3 = T2 * T, dr = PI / 180;
+    var Jd1 = 2415020.75933 + 29.53058868 * k + 0.0001178 * T2 - 0.000000155 * T3;
+    Jd1 += 0.00033 * Math.sin((166.56 + 132.87 * T - 0.009173 * T2) * dr);
+    var M = 359.2242 + 29.10535608 * k - 0.0000333 * T2 - 0.00000347 * T3;
+    var Mpr = 306.0253 + 385.81691806 * k + 0.0107306 * T2 + 0.00001236 * T3;
+    var F = 21.2964 + 390.67050646 * k - 0.0016528 * T2 - 0.00000239 * T3;
+    var C1 = (0.1734 - 0.000393 * T) * Math.sin(M * dr) + 0.0021 * Math.sin(2 * dr * M);
+    C1 = C1 - 0.4068 * Math.sin(Mpr * dr) + 0.0161 * Math.sin(dr * 2 * Mpr);
+    C1 = C1 - 0.0004 * Math.sin(dr * 3 * Mpr);
+    C1 = C1 + 0.0104 * Math.sin(dr * 2 * F) - 0.0051 * Math.sin(dr * (M + Mpr));
+    C1 = C1 - 0.0074 * Math.sin(dr * (M - Mpr)) + 0.0004 * Math.sin(dr * (2 * F + M));
+    C1 = C1 - 0.0004 * Math.sin(dr * (2 * F - M)) - 0.0006 * Math.sin(dr * (2 * F + Mpr));
+    C1 = C1 + 0.0010 * Math.sin(dr * (2 * F - Mpr)) + 0.0005 * Math.sin(dr * (2 * Mpr + M));
+    var deltat = (T < -11)
+      ? 0.001 + 0.000839 * T + 0.0002261 * T2 - 0.00000845 * T3 - 0.000000081 * T * T3
+      : -0.000278 + 0.000265 * T + 0.000262 * T2;
+    return Jd1 + C1 - deltat;
+  }
+  function sunLongitude(jdn) { // radian
+    var T = (jdn - 2451545.0) / 36525, T2 = T * T, dr = PI / 180;
+    var M = 357.52910 + 35999.05030 * T - 0.0001559 * T2 - 0.00000048 * T * T2;
+    var L0 = 280.46645 + 36000.76983 * T + 0.0003032 * T2;
+    var DL = (1.914600 - 0.004817 * T - 0.000014 * T2) * Math.sin(dr * M);
+    DL += (0.019993 - 0.000101 * T) * Math.sin(dr * 2 * M) + 0.000290 * Math.sin(dr * 3 * M);
+    var L = (L0 + DL) * dr;
+    return L - PI * 2 * INT(L / (PI * 2));
+  }
+  function sunDeg(jdUT) { return sunLongitude(jdUT) * 180 / PI; }
+  function getSunLongitude(dayNumber, tz) { return INT(sunLongitude(dayNumber - 0.5 - tz / 24) / PI * 6); }
+  function getNewMoonDay(k, tz) { return INT(newMoon(k) + 0.5 + tz / 24); }
+  function getLunarMonth11(yy, tz) {
+    var k = INT((jdFromDate(31, 12, yy) - 2415021) / 29.530588853);
+    var nm = getNewMoonDay(k, tz);
+    if (getSunLongitude(nm, tz) >= 9) nm = getNewMoonDay(k - 1, tz);
+    return nm;
+  }
+  function getLeapMonthOffset(a11, tz) {
+    var k = INT((a11 - 2415021.076998695) / 29.530588853 + 0.5), last, i = 1;
+    var arc = getSunLongitude(getNewMoonDay(k + i, tz), tz);
+    do { last = arc; i++; arc = getSunLongitude(getNewMoonDay(k + i, tz), tz); } while (arc !== last && i < 14);
+    return i - 1;
+  }
+  function solar2lunar(dd, mm, yy) {
+    var dayNumber = jdFromDate(dd, mm, yy);
+    var k = INT((dayNumber - 2415021.076998695) / 29.530588853);
+    var km = k + 1, monthStart = getNewMoonDay(km, TZ);
+    if (monthStart > dayNumber) { km = k; monthStart = getNewMoonDay(km, TZ); }
+    var monthLen = getNewMoonDay(km + 1, TZ) - monthStart;
+    var a11 = getLunarMonth11(yy, TZ), b11 = a11, lunarYear;
+    if (a11 >= monthStart) { lunarYear = yy; a11 = getLunarMonth11(yy - 1, TZ); }
+    else { lunarYear = yy + 1; b11 = getLunarMonth11(yy + 1, TZ); }
+    var lunarDay = dayNumber - monthStart + 1;
+    var diff = INT((monthStart - a11) / 29), lunarLeap = 0, lunarMonth = diff + 11;
+    if (b11 - a11 > 365) {
+      var leapMonthDiff = getLeapMonthOffset(a11, TZ);
+      if (diff >= leapMonthDiff) { lunarMonth = diff + 10; if (diff === leapMonthDiff) lunarLeap = 1; }
+    }
+    if (lunarMonth > 12) lunarMonth -= 12;
+    if (lunarMonth >= 11 && diff < 4) lunarYear -= 1;
+    return { day: lunarDay, month: lunarMonth, year: lunarYear, leap: lunarLeap, monthLen: monthLen };
+  }
+  function lunar2solar(ld, lm, ly, leap) {
+    var a11, b11;
+    if (lm < 11) { a11 = getLunarMonth11(ly - 1, TZ); b11 = getLunarMonth11(ly, TZ); }
+    else { a11 = getLunarMonth11(ly, TZ); b11 = getLunarMonth11(ly + 1, TZ); }
+    var k = INT(0.5 + (a11 - 2415021.076998695) / 29.530588853), off = lm - 11;
+    if (off < 0) off += 12;
+    if (b11 - a11 > 365) {
+      var leapOff = getLeapMonthOffset(a11, TZ), leapMonth = leapOff - 2;
+      if (leapMonth < 0) leapMonth += 12;
+      if (leap && lm !== leapMonth) return null;
+      if (leap || off >= leapOff) off += 1;
+    } else if (leap) return null;
+    var monthStart = getNewMoonDay(k + off, TZ);
+    return jdToDate(monthStart + ld - 1);
+  }
+  function termOf(jd) { return INT(sunDeg(jd + 0.5 - TZ / 24) / 15) % 24; } // tiết khí tính tới cuối ngày
+  function termSpan(jd) {
+    var t = termOf(jd), s = jd, e = jd + 1;
+    while (termOf(s - 1) === t && jd - s < 20) s--;
+    while (termOf(e) === t && e - jd < 20) e++;
+    return { name: TIETKHI[t], start: jdToDate(s), next: TIETKHI[(t + 1) % 24], nextDate: jdToDate(e), today: s === jd };
+  }
+
+  /* ---------- Lịch vạn sự ---------- */
+  var THAN12 = [
+    { n: 'Thanh Long', g: true, d: 'Tốt cho mọi việc, nhất là khởi sự việc lớn.' },
+    { n: 'Minh Đường', g: true, d: 'Dễ gặp quý nhân, lợi cầu danh, gặp gỡ, giao dịch.' },
+    { n: 'Thiên Hình', g: false, d: 'Kỵ kiện tụng, ký giấy tờ quan trọng.' },
+    { n: 'Chu Tước', g: false, d: 'Dễ thị phi, cãi vã; kỵ kiện tụng, khai trương.' },
+    { n: 'Kim Quỹ', g: true, d: 'Lợi cưới hỏi, cầu tài, sinh con.' },
+    { n: 'Kim Đường', g: true, d: 'Còn gọi Bảo Quang: làm việc gì cũng thuận.' },
+    { n: 'Bạch Hổ', g: false, d: 'Kỵ an táng, đi xa, việc có rủi ro.' },
+    { n: 'Ngọc Đường', g: true, d: 'Lợi học hành, giấy tờ, nhậm chức.' },
+    { n: 'Thiên Lao', g: false, d: 'Mọi việc dễ vướng mắc, trì trệ.' },
+    { n: 'Huyền Vũ', g: false, d: 'Đề phòng mất mát; kỵ giao dịch, kiện tụng.' },
+    { n: 'Tư Mệnh', g: true, d: 'Tốt, nhất là việc làm vào ban ngày.' },
+    { n: 'Câu Trận', g: false, d: 'Kỵ động thổ, an táng, dời nhà.' }
+  ];
+  var TRUC12 = [
+    { n: 'Kiến', r: 0, nen: 'Xuất hành, khai trương, nhậm chức, cầu tài', kieng: 'Động thổ, an táng, đào giếng' },
+    { n: 'Trừ', r: 1, nen: 'Cúng giải hạn, trừ tà, chữa bệnh, dọn dẹp', kieng: 'Cưới hỏi, đi xa, khai trương' },
+    { n: 'Mãn', r: 0, nen: 'Cúng tế, cầu tài, mở kho, nhập hàng', kieng: 'Kiện tụng, nhậm chức, an táng' },
+    { n: 'Bình', r: 0, nen: 'Sửa đường, sơn sửa nhà, việc thường ngày', kieng: 'Khởi sự việc lớn' },
+    { n: 'Định', r: 1, nen: 'Cưới hỏi, ký kết, giao dịch, nhập học', kieng: 'Kiện tụng, đi xa' },
+    { n: 'Chấp', r: 1, nen: 'Xây dựng, trồng cây, tuyển người, lập khế ước', kieng: 'Xuất hành, dời nhà, mở kho' },
+    { n: 'Phá', r: -1, nen: 'Phá dỡ nhà cũ, chữa bệnh', kieng: 'Cưới hỏi, khai trương, ký kết, động thổ' },
+    { n: 'Nguy', r: -1, nen: 'Cúng tế, cầu an', kieng: 'Leo cao, đi sông nước, việc mạo hiểm' },
+    { n: 'Thành', r: 1, nen: 'Khai trương, cưới hỏi, nhập trạch, xây dựng, nhập học', kieng: 'Kiện tụng, tranh chấp' },
+    { n: 'Thu', r: 0, nen: 'Thu hoạch, thu nợ, nhập kho, mua bán', kieng: 'Khai trương, an táng, đi xa' },
+    { n: 'Khai', r: 1, nen: 'Khai trương, cưới hỏi, xuất hành, nhập học', kieng: 'An táng, đào đất' },
+    { n: 'Bế', r: -1, nen: 'Đắp đê, lấp hố, xây tường', kieng: 'Khai trương, xuất hành, cưới hỏi' }
+  ];
+  var SAO28 = [
+    ['Giác', 'Mộc Giao', 1, 'Tốt cho cưới hỏi, xây dựng; kỵ an táng'],
+    ['Cang', 'Kim Long', 0, 'Kỵ cưới hỏi, xây dựng, an táng'],
+    ['Đê', 'Thổ Lạc', 0, 'Kỵ khởi công, cưới hỏi, đi thuyền'],
+    ['Phòng', 'Nhật Thố', 1, 'Tốt mọi việc, nhất là cưới hỏi, xây dựng'],
+    ['Tâm', 'Nguyệt Hồ', 0, 'Xấu cho khởi tạo, cưới hỏi, kiện tụng'],
+    ['Vĩ', 'Hỏa Hổ', 1, 'Tốt cho cưới hỏi, xây dựng, khai trương'],
+    ['Cơ', 'Thủy Báo', 1, 'Tốt cho xây dựng, khai trương, đào ao'],
+    ['Đẩu', 'Mộc Giải', 1, 'Tốt cho xây dựng, sửa chữa, may mặc'],
+    ['Ngưu', 'Kim Ngưu', 0, 'Kỵ cưới hỏi, xây dựng, khai trương'],
+    ['Nữ', 'Thổ Bức', 0, 'Kỵ cưới hỏi, an táng, kiện tụng'],
+    ['Hư', 'Nhật Thử', 0, 'Kỵ khởi công, cưới hỏi, khai trương'],
+    ['Nguy', 'Nguyệt Yến', 0, 'Kỵ xây dựng, đi thuyền, leo cao'],
+    ['Thất', 'Hỏa Trư', 1, 'Tốt mọi việc: cưới hỏi, xây dựng, nhập trạch'],
+    ['Bích', 'Thủy Du', 1, 'Tốt cho cưới hỏi, khai trương, xây dựng'],
+    ['Khuê', 'Mộc Lang', 0, 'Kỵ khai trương, mở cửa hàng'],
+    ['Lâu', 'Kim Cẩu', 1, 'Tốt cho cưới hỏi, xây dựng, mở cửa hàng'],
+    ['Vị', 'Thổ Trĩ', 1, 'Tốt cho cưới hỏi, xây dựng, cầu tài'],
+    ['Mão', 'Nhật Kê', 0, 'Kỵ xây dựng, cưới hỏi, mở cửa'],
+    ['Tất', 'Nguyệt Ô', 1, 'Tốt cho khởi công, cưới hỏi, trồng trọt'],
+    ['Chủy', 'Hỏa Hầu', 0, 'Kỵ khởi công, an táng, kiện tụng'],
+    ['Sâm', 'Thủy Viên', 1, 'Tốt cho xây dựng, khai trương; kỵ cưới hỏi'],
+    ['Tỉnh', 'Mộc Hãn', 1, 'Tốt cho xây dựng, nhập học, đào giếng'],
+    ['Quỷ', 'Kim Dương', 0, 'Xấu nhiều việc, riêng an táng thì được'],
+    ['Liễu', 'Thổ Chướng', 0, 'Kỵ khởi công, cưới hỏi, an táng'],
+    ['Tinh', 'Nhật Mã', 0, 'Kỵ cưới hỏi, mở cửa; làm phòng mới thì được'],
+    ['Trương', 'Nguyệt Lộc', 1, 'Tốt cho cưới hỏi, khai trương, cúng tế'],
+    ['Dực', 'Hỏa Xà', 0, 'Kỵ cưới hỏi, xây dựng, an táng'],
+    ['Chẩn', 'Thủy Dẫn', 1, 'Tốt cho khởi công, cưới hỏi, nhập học']
+  ].map(function (a) { return { n: a[0], full: a[0] + ' ' + a[1], g: !!a[2], d: a[3] }; });
+  var LTP = [
+    { n: 'Đại An', g: true, d: 'Mọi việc yên ổn; cầu tài nên đi hướng Tây Nam.' },
+    { n: 'Lưu Niên', g: false, d: 'Việc khó thành, kéo dài; dễ vướng thị phi.' },
+    { n: 'Tốc Hỷ', g: true, d: 'Tin vui đến nhanh; cầu tài nên đi hướng Nam.' },
+    { n: 'Xích Khẩu', g: false, d: 'Dễ cãi vã, thị phi; nên giữ lời, tránh tranh luận.' },
+    { n: 'Tiểu Cát', g: true, d: 'Gặp may, buôn bán có lời, có người giúp đỡ.' },
+    { n: 'Tuyệt Lộ', g: false, d: 'Còn gọi Không Vong: việc khó thành, đề phòng mất mát.' }
+  ];
+  // Hỷ thần theo can ngày; Tài thần theo cách tính phổ biến trong lịch Việt
+  var HY = [1, 7, 5, 4, 3, 1, 7, 5, 4, 3];
+  var TAI = [3, 3, 2, 2, 0, 4, 5, 5, 6, 7];
+  function hacThan(sx) { // Hạc thần theo vòng 60 ngày, bắt đầu từ ngày Kỷ Dậu
+    if (sx >= 45 && sx <= 50) return 1;
+    if (sx >= 51 && sx <= 55) return 2;
+    if (sx >= 56 || sx <= 1) return 3;
+    if (sx >= 2 && sx <= 6) return 4;
+    if (sx >= 7 && sx <= 12) return 5;
+    if (sx >= 13 && sx <= 17) return 6;
+    if (sx >= 18 && sx <= 23) return 7;
+    if (sx >= 24 && sx <= 28) return 0;
+    return -1; // 16 ngày Quý Tỵ → Mậu Thân: Hạc thần lên trời
+  }
+  var LE_AM = {
+    '1-1': 'Tết Nguyên Đán', '2-1': 'Mùng 2 Tết', '3-1': 'Mùng 3 Tết', '15-1': 'Rằm tháng Giêng (Tết Nguyên Tiêu)',
+    '3-3': 'Tết Hàn Thực', '10-3': 'Giỗ Tổ Hùng Vương', '15-4': 'Lễ Phật Đản', '5-5': 'Tết Đoan Ngọ',
+    '15-7': 'Rằm tháng Bảy (Vu Lan, xá tội vong nhân)', '15-8': 'Tết Trung Thu', '9-9': 'Tết Trùng Cửu',
+    '10-10': 'Tết Thường Tân (cơm mới)', '15-10': 'Tết Hạ Nguyên', '23-12': 'Ông Công Ông Táo về trời'
+  };
+  var DUONG_CONG = { '13-1': 1, '11-2': 1, '9-3': 1, '7-4': 1, '5-5': 1, '3-6': 1, '8-7': 1, '29-7': 1, '27-8': 1, '25-9': 1, '23-10': 1, '21-11': 1, '19-12': 1 };
+
+  var ACTS = [
+    { id: 'khai', n: 'Khai trương, mở hàng' },
+    { id: 'cuoi', n: 'Cưới hỏi, ăn hỏi' },
+    { id: 'tho', n: 'Động thổ, xây sửa nhà' },
+    { id: 'trach', n: 'Nhập trạch, về nhà mới' },
+    { id: 'xuat', n: 'Xuất hành, đi xa' },
+    { id: 'cung', n: 'Cúng lễ, cầu an, giải hạn' },
+    { id: 'ky', n: 'Ký kết, giao dịch lớn' },
+    { id: 'tang', n: 'An táng, cải táng' }
+  ];
+  var TRUC_ACT = {
+    'Kiến': { xuat: 1, khai: 1, ky: 1, tho: -2, tang: -2 },
+    'Trừ': { cung: 2, cuoi: -2, khai: -1, xuat: -1 },
+    'Mãn': { cung: 2, khai: 1, ky: 1, tang: -2 },
+    'Bình': { tho: 1 },
+    'Định': { cuoi: 2, ky: 2, khai: 1, trach: 1, xuat: -1 },
+    'Chấp': { tho: 2, ky: 1, xuat: -2, trach: -1, khai: -1 },
+    'Phá': { cuoi: -2, khai: -2, ky: -2, tho: -2, trach: -2, tang: -1, xuat: -1, cung: -1 },
+    'Nguy': { xuat: -2, tho: -2, cuoi: -1, khai: -1, trach: -1 },
+    'Thành': { cuoi: 2, khai: 2, trach: 2, tho: 2, ky: 2, xuat: 1, cung: 1 },
+    'Thu': { ky: 1, khai: -2, tang: -2, xuat: -2 },
+    'Khai': { khai: 2, cuoi: 2, xuat: 2, ky: 1, trach: 1, tang: -2, tho: -1 },
+    'Bế': { tang: 1, khai: -2, xuat: -2, cuoi: -2, ky: -1 }
+  };
+  var SAO_ACT = { 'Giác': { tang: -2 }, 'Sâm': { cuoi: -2 }, 'Quỷ': { tang: 1 }, 'Tinh': { trach: 1 } };
+  var THAN_ACT = {
+    'Kim Quỹ': { cuoi: 1, khai: 1 }, 'Ngọc Đường': { ky: 1 }, 'Thanh Long': { khai: 1, tho: 1 },
+    'Bạch Hổ': { tang: -1, xuat: -1 }, 'Chu Tước': { ky: -1, khai: -1 }, 'Câu Trận': { tho: -1, tang: -1 }, 'Thiên Hình': { ky: -1 }
+  };
+  var KY_DEF = {
+    tn: { n: 'Tam Nương', d: 'Kỵ cưới hỏi, khai trương, xuất hành, khởi công.', w: 2, act: { cuoi: 3, khai: 3, xuat: 2, tho: 2, trach: 2, ky: 2, cung: 1, tang: 1 } },
+    nk: { n: 'Nguyệt Kỵ', d: 'Mùng 5, 14, 23: kỵ đi xa, khởi sự việc lớn.', w: 2, act: { xuat: 3, khai: 2, cuoi: 2, tho: 2, trach: 2, ky: 2, cung: 1, tang: 1 } },
+    dc: { n: 'Dương Công Kỵ Nhật', d: 'Đại kỵ khởi công, cưới hỏi, làm việc lớn.', w: 3, act: null }
+  };
+
+  function festNames(lu) {
+    var a = [], key = lu.day + '-' + lu.month;
+    if (!lu.leap && LE_AM[key]) a.push(LE_AM[key]);
+    if (!lu.leap && lu.month === 12 && lu.day === lu.monthLen) a.push('Trừ tịch, cúng Giao thừa');
+    if (lu.day === 1 && (lu.leap || lu.month !== 1)) a.push('Mùng 1, ngày Sóc: cúng gia tiên, Thổ công');
+    if (lu.day === 15 && !a.length) a.push('Ngày Rằm (Vọng): cúng gia tiên');
+    return a;
+  }
+
+  function ageRel(dChi, prof) {
+    if (!prof) return null;
+    var c = (prof.y + 8) % 12;
+    var xung = (dChi - c + 12) % 12 === 6;
+    var tam = !xung && dChi !== c && dChi % 4 === c % 4;
+    var luc = (dChi + c) % 12 === 1;
+    return { chi: c, xung: xung, hop: tam || luc, kind: luc ? 'lục hợp' : (tam ? 'tam hợp' : '') };
+  }
+
+  function dayInfo(dd, mm, yy, prof) {
+    var jd = jdFromDate(dd, mm, yy), lu = solar2lunar(dd, mm, yy);
+    var dCan = (jd + 9) % 10, dChi = (jd + 1) % 12, sexa = (jd + 49) % 60;
+    var mCan = (lu.year * 12 + lu.month + 3) % 10, mChi = (lu.month + 1) % 12;
+    var yCan = (lu.year + 6) % 10, yChi = (lu.year + 8) % 12;
+    var Le = sunDeg(jd + 0.5 - TZ / 24);
+    var tietChi = (INT(((Le - 315 + 360) % 360) / 30) + 2) % 12;
+    var truc = TRUC12[(dChi - tietChi + 12) % 12];
+    var than = THAN12[(dChi - ((lu.month - 1) % 6) * 2 + 12) % 12];
+    var sao = SAO28[(jd + 11) % 28];
+    var ky = [];
+    if ([3, 7, 13, 18, 22, 27].indexOf(lu.day) >= 0) ky.push(KY_DEF.tn);
+    if ([5, 14, 23].indexOf(lu.day) >= 0) ky.push(KY_DEF.nk);
+    if (DUONG_CONG[lu.day + '-' + lu.month]) ky.push(KY_DEF.dc);
+    var hStart = ((dChi + 10) % 6) * 2, hours = [], h;
+    for (h = 0; h < 12; h++) {
+      var t = THAN12[(h - hStart + 12) % 12];
+      hours.push({ chi: h, can: ((dCan % 5) * 2 + h) % 10, than: t, g: t.g, from: (2 * h + 23) % 24, to: (2 * h + 1) % 24 });
+    }
+    var ltp = LTP.map(function (s) { return { s: s, hours: [] }; });
+    for (h = 0; h < 12; h++) ltp[(lu.month + lu.day + h - 2) % 6].hours.push(h);
+    var info = {
+      jd: jd, d: dd, m: mm, y: yy, wd: (jd + 1) % 7, lu: lu,
+      dCan: dCan, dChi: dChi, sexa: sexa,
+      dayCC: CAN[dCan] + ' ' + CHI[dChi], monthCC: CAN[mCan] + ' ' + CHI[mChi], yearCC: CAN[yCan] + ' ' + CHI[yChi],
+      yChi: yChi, tietChi: tietChi, truc: truc, than: than, sao: sao, ky: ky, hours: hours, ltp: ltp,
+      dirs: { hy: HY[dCan], tai: TAI[dCan], hac: hacThan(sexa) },
+      xungChi: (dChi + 6) % 12, xungNang: CAN[(dCan + 6) % 10] + ' ' + CHI[(dChi + 6) % 12],
+      tamHop: [0, 4, 8].map(function (k) { return (dChi % 4) + k; }).filter(function (c) { return c !== dChi; }),
+      lucHop: (13 - dChi) % 12,
+      fest: festNames(lu),
+      age: ageRel(dChi, prof)
+    };
+    info.wdName = THU[info.wd];
+    var sc = scoreFor(info, null);
+    info.score = sc.s; info.why = sc.why; info.verdict = verdict(sc.s);
+    return info;
+  }
+
+  function scoreFor(info, act) {
+    var s = info.than.g ? 2 : -2, why = [];
+    why.push({ t: (info.than.g ? 'Hoàng đạo ' : 'Hắc đạo ') + info.than.n, g: info.than.g });
+    var sv = info.sao.g ? 1 : -1;
+    if (act && SAO_ACT[info.sao.n] && SAO_ACT[info.sao.n][act] !== undefined) sv = SAO_ACT[info.sao.n][act];
+    s += sv; why.push({ t: 'Sao ' + info.sao.n, g: sv > 0 });
+    var tv = act ? (TRUC_ACT[info.truc.n][act] || 0) : info.truc.r;
+    s += tv; if (tv !== 0) why.push({ t: 'Trực ' + info.truc.n, g: tv > 0 });
+    if (act && THAN_ACT[info.than.n] && THAN_ACT[info.than.n][act]) s += THAN_ACT[info.than.n][act];
+    info.ky.forEach(function (k) {
+      var w = (act && k.act && k.act[act] !== undefined) ? k.act[act] : k.w;
+      s -= w; why.push({ t: k.n, g: false });
+    });
+    if (info.age) {
+      if (info.age.xung) { s -= act ? 3 : 2; why.push({ t: 'Xung tuổi', g: false }); }
+      else if (info.age.hop) { s += 1; why.push({ t: 'Hợp tuổi (' + info.age.kind + ')', g: true }); }
+    }
+    return { s: s, why: why };
+  }
+  function verdict(s) {
+    if (s >= 3) return { t: 'Rất tốt', c: 'good' };
+    if (s >= 2) return { t: 'Tốt', c: 'good' };
+    if (s >= 0) return { t: 'Trung bình', c: 'mid' };
+    if (s >= -2) return { t: 'Xấu', c: 'bad' };
+    return { t: 'Rất xấu', c: 'bad' };
+  }
+  function upcoming(jd0, n) {
+    var out = [];
+    for (var j = jd0; j < jd0 + n; j++) {
+      var dt = jdToDate(j), lu = solar2lunar(dt[0], dt[1], dt[2]), names = festNames(lu);
+      if (names.length) out.push({ jd: j, d: dt[0], m: dt[1], y: dt[2], lu: lu, names: names });
+    }
+    return out;
+  }
+
+  /* ---------- La bàn ---------- */
+  function readDir(H) {
+    H = ((H % 360) + 360) % 360;
+    var s = INT(((H + 7.5) % 360) / 15), d8 = INT(((H + 22.5) % 360) / 45);
+    var T = (H + 180) % 360, ts = INT(((T + 7.5) % 360) / 15), td = INT(((T + 22.5) % 360) / 45);
+    var o1 = (H + 7.5) % 15, o8 = (H + 22.5) % 45;
+    return {
+      deg: H, s: s, son: SON24[s][0], sonHan: SON24[s][1], d8: d8, dir: DIR8[d8], quai: QUAI8[d8], hanh: QUAI_HANH[d8],
+      toa: T, toaSon: SON24[ts][0], toaD8: td, toaDir: DIR8[td],
+      kv: Math.min(o1, 15 - o1) < 1.5, dkv: Math.min(o8, 45 - o8) < 1.5
+    };
+  }
+
+  /* ---------- Tuổi, mệnh, Bát trạch ---------- */
+  var NAPAM = ['Hải Trung Kim', 'Lư Trung Hỏa', 'Đại Lâm Mộc', 'Lộ Bàng Thổ', 'Kiếm Phong Kim', 'Sơn Đầu Hỏa',
+    'Giản Hạ Thủy', 'Thành Đầu Thổ', 'Bạch Lạp Kim', 'Dương Liễu Mộc', 'Tuyền Trung Thủy', 'Ốc Thượng Thổ',
+    'Tích Lịch Hỏa', 'Tùng Bách Mộc', 'Trường Lưu Thủy', 'Sa Trung Kim', 'Sơn Hạ Hỏa', 'Bình Địa Mộc',
+    'Bích Thượng Thổ', 'Kim Bạch Kim', 'Phú Đăng Hỏa', 'Thiên Hà Thủy', 'Đại Trạch Thổ', 'Thoa Xuyến Kim',
+    'Tang Đố Mộc', 'Đại Khê Thủy', 'Sa Trung Thổ', 'Thiên Thượng Hỏa', 'Thạch Lựu Mộc', 'Đại Hải Thủy'];
+  var NAPAM_VN = ['vàng trong biển', 'lửa trong lò', 'gỗ rừng già', 'đất ven đường', 'vàng mũi kiếm', 'lửa trên núi',
+    'nước khe suối', 'đất tường thành', 'vàng chân đèn', 'gỗ cây dương liễu', 'nước trong giếng', 'đất mái nhà',
+    'lửa sấm sét', 'gỗ tùng bách', 'nước sông dài', 'vàng trong cát', 'lửa dưới chân núi', 'gỗ đồng bằng',
+    'đất trên vách', 'vàng pha bạc', 'lửa ngọn đèn', 'nước trên trời', 'đất đầm lớn', 'vàng trang sức',
+    'gỗ cây dâu', 'nước khe lớn', 'đất pha cát', 'lửa trên trời', 'gỗ cây lựu đá', 'nước biển lớn'];
+  var MAU = {
+    'Kim': { hop: 'trắng, xám, ghi; vàng, nâu đất', ky: 'đỏ, hồng, tím' },
+    'Mộc': { hop: 'xanh lá; đen, xanh nước biển', ky: 'trắng, xám, ghi' },
+    'Thủy': { hop: 'đen, xanh nước biển; trắng, xám', ky: 'vàng, nâu đất' },
+    'Hỏa': { hop: 'đỏ, hồng, tím; xanh lá', ky: 'đen, xanh nước biển' },
+    'Thổ': { hop: 'vàng, nâu đất; đỏ, hồng, tím', ky: 'xanh lá' }
+  };
+  var BT_STARS = [
+    { n: 'Sinh khí', g: true, d: 'Tài lộc, thăng tiến, sức sống dồi dào. Hướng tốt nhất.', use: 'Cửa chính, bàn làm việc' },
+    { n: 'Thiên y', g: true, d: 'Sức khỏe, quý nhân giúp đỡ, trường thọ.', use: 'Phòng ngủ, bàn thờ, hướng bếp' },
+    { n: 'Diên niên', g: true, d: 'Gia đạo hòa thuận, các mối quan hệ bền lâu.', use: 'Phòng vợ chồng, bàn thờ' },
+    { n: 'Phục vị', g: true, d: 'Bình yên, vững vàng, lợi học hành.', use: 'Bàn thờ, bàn học, đầu giường' },
+    { n: 'Họa hại', g: false, d: 'Thị phi, trắc trở nhỏ, hao tài.', use: 'Nhà vệ sinh, kho' },
+    { n: 'Ngũ quỷ', g: false, d: 'Mất mát, tranh cãi, dễ gặp hỏa hoạn.', use: 'Chỗ đặt bếp, nhà vệ sinh' },
+    { n: 'Lục sát', g: false, d: 'Kiện tụng, tình cảm trắc trở.', use: 'Nhà vệ sinh, kho' },
+    { n: 'Tuyệt mệnh', g: false, d: 'Xấu nhất: bệnh tật, tổn hại lớn.', use: 'Nhà vệ sinh, kho; tránh cửa và giường' }
+  ];
+  // Bát trạch: với mỗi cung, hướng (0..7 = B, ĐB, Đ, ĐN, N, TN, T, TB) của Sinh khí, Thiên y, Diên niên, Phục vị, Họa hại, Ngũ quỷ, Lục sát, Tuyệt mệnh
+  var BT = {
+    1: [3, 2, 4, 0, 6, 1, 7, 5], 2: [1, 6, 7, 5, 2, 3, 4, 0], 3: [4, 0, 3, 2, 5, 7, 1, 6], 4: [0, 4, 2, 3, 7, 5, 6, 1],
+    6: [6, 1, 5, 7, 3, 2, 0, 4], 7: [7, 5, 1, 6, 0, 4, 3, 2], 8: [5, 7, 6, 1, 4, 0, 2, 3], 9: [2, 3, 0, 4, 1, 6, 5, 7]
+  };
+  var KUA_DIR = { 1: 0, 2: 5, 3: 2, 4: 3, 6: 7, 7: 6, 8: 1, 9: 4 };
+
+  function kua(y, g) {
+    var k;
+    if (g === 'nam') { k = (11 - (y % 9)) % 9; if (k === 0) k = 9; if (k === 5) k = 2; }
+    else { k = (y % 9 + 4) % 9; if (k === 0) k = 9; if (k === 5) k = 8; }
+    return k;
+  }
+  function ageInfo(y, g) {
+    var can = (y + 6) % 10, chi = (y + 8) % 12, sx = ((y - 4) % 60 + 60) % 60, na = INT(sx / 2);
+    var k = kua(y, g), d = KUA_DIR[k], stars = BT[k], byDir = [];
+    for (var i = 0; i < 8; i++) byDir[stars[i]] = i;
+    var hanh = NAPAM[na].split(' ').pop();
+    return {
+      y: y, g: g, cc: CAN[can] + ' ' + CHI[chi], can: can, chi: chi, giap: GIAP[chi],
+      napam: NAPAM[na], napamVN: NAPAM_VN[na], hanh: hanh, mau: MAU[hanh],
+      kua: k, cung: QUAI8[d], cungHan: QUAI_HAN[d], cungDir: d,
+      menh: [1, 3, 4, 9].indexOf(k) >= 0 ? 'Đông tứ mệnh' : 'Tây tứ mệnh',
+      stars: stars, byDir: byDir,
+      tamHop: [0, 4, 8].map(function (x) { return (chi % 4) + x; }).filter(function (c) { return c !== chi; }),
+      lucHop: (13 - chi) % 12,
+      xung: (chi + 6) % 12,
+      tuHanhXung: [0, 3, 6, 9].map(function (x) { return (chi % 3) + x; }).filter(function (c) { return c !== chi; })
+    };
+  }
+  function yearCheck(by, vy) {
+    var age = vy - by + 1, r = age % 9;
+    var KL = { 1: 'Kim Lâu Thân (hại bản thân)', 3: 'Kim Lâu Thê (hại vợ hoặc chồng)', 6: 'Kim Lâu Tử (hại con cái)', 8: 'Kim Lâu Lục Súc (hại kinh tế, vật nuôi)' };
+    var HO = [['Nhất Cát', true], ['Nhì Nghi', true], ['Tam Địa Sát', false], ['Tứ Tấn Tài', true], ['Ngũ Thọ Tử', false], ['Lục Hoang Ốc', false]];
+    var ho = age >= 10 ? HO[(INT(age / 10) - 1 + age % 10) % 6] : null;
+    var cb = (by + 8) % 12, cv = (vy + 8) % 12, st = { 0: 2, 1: 11, 2: 8, 3: 5 }[cb % 4];
+    var tt = [st, (st + 1) % 12, (st + 2) % 12];
+    var ttIdx = tt.indexOf(cv);
+    var thaiTue = cb === cv ? 'Năm tuổi (trùng Thái Tuế)' : ((cb - cv + 12) % 12 === 6 ? 'Xung Thái Tuế' : '');
+    return {
+      age: age, vyCC: CAN[(vy + 6) % 10] + ' ' + CHI[cv],
+      kimLau: KL[r] || '', hoangOc: ho ? { n: ho[0], g: ho[1] } : null,
+      tamTai: ttIdx >= 0 ? (ttIdx + 1) : 0, tamTaiYears: tt, thaiTue: thaiTue
+    };
+  }
+
+  return {
+    CAN: CAN, CHI: CHI, GIAP: GIAP, THU: THU, THANG_AM: THANG_AM, TIETKHI: TIETKHI, DIR8: DIR8, QUAI8: QUAI8,
+    QUAI_HAN: QUAI_HAN, TRIGRAM: TRIGRAM, SON24: SON24, BT_STARS: BT_STARS, ACTS: ACTS, LTP: LTP,
+    jdFromDate: jdFromDate, jdToDate: jdToDate, solar2lunar: solar2lunar, lunar2solar: lunar2solar,
+    termSpan: termSpan, dayInfo: dayInfo, scoreFor: scoreFor, verdict: verdict, upcoming: upcoming,
+    readDir: readDir, ageInfo: ageInfo, yearCheck: yearCheck, kua: kua
+  };
+})();
+
+
+</script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (s) { return document.querySelector(s); };
+  var NS = 'http://www.w3.org/2000/svg';
+  var D8 = FS.DIR8;
+  var OPEN_URL = 'https://vh0202.github.io/la-ban-phong-thuy/';
+  var inFrame = true;
+  try { inFrame = window.self !== window.top; } catch (e) { inFrame = true; }
+  var reduce = false;
+  try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  function store(k, v) {
+    try {
+      if (v === undefined) { var s = window.localStorage.getItem(k); return s ? JSON.parse(s) : null; }
+      window.localStorage.setItem(k, JSON.stringify(v));
+    } catch (e) {}
+    return null;
+  }
+  function validProf(p) { return (p && typeof p.y === 'number' && p.y >= 1900 && p.y <= 2100 && (p.g === 'nam' || p.g === 'nu')) ? { y: p.y, g: p.g } : null; }
+  function todayObj() { var n = new Date(); return { d: n.getDate(), m: n.getMonth() + 1, y: n.getFullYear() }; }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function fmt(o) { return pad(o.d) + '/' + pad(o.m) + '/' + o.y; }
+  function fromJd(j) { var a = FS.jdToDate(j); return { d: a[0], m: a[1], y: a[2] }; }
+  function jdOf(o) { return FS.jdFromDate(o.d, o.m, o.y); }
+  function same(a, b) { return a.d === b.d && a.m === b.m && a.y === b.y; }
+  function iso(o) { return o.y + '-' + pad(o.m) + '-' + pad(o.d); }
+  function parseIso(s) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); if (!m) return null; var o = { y: +m[1], m: +m[2], d: +m[3] }; return (o.y >= 1900 && o.y <= 2100) ? o : null; }
+  function hr(h) { return ((2 * h + 23) % 24) + '–' + ((2 * h + 1) % 24) + 'h'; }
+  function luStr(lu) { return lu.day + '/' + lu.month + (lu.leap ? ' nhuận' : ''); }
+  function monthName(lu) { return 'tháng ' + FS.THANG_AM[lu.month - 1] + (lu.leap ? ' nhuận' : ''); }
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function pill(c, t) { return '<span class="pill ' + c + '">' + t + '</span>'; }
+  function cn(c) { return FS.CHI[c]; }
+  function profLabel(p) { return (p.g === 'nam' ? 'Nam' : 'Nữ') + ' ' + p.y; }
+  function curLunarYear() { var t = todayObj(); return FS.solar2lunar(t.d, t.m, t.y).year; }
+
+  var T0 = todayObj();
+  var S = { tab: 'la-ban', date: T0, view: { m: T0.m, y: T0.y }, heading: 0, shown: 0, prof: validProf(store('fs.prof')),
+    g: 'nam', sensor: false, got: false, moved: false };
+  var cache = null;
+  function info() {
+    var k = iso(S.date) + '|' + (S.prof ? S.prof.y + S.prof.g : '');
+    if (!cache || cache.k !== k) cache = { k: k, v: FS.dayInfo(S.date.d, S.date.m, S.date.y, S.prof) };
+    return cache.v;
+  }
+  function dayWord() { return same(S.date, todayObj()) ? 'hôm nay' : 'ngày ' + fmt(S.date); }
+
+  /* ---------- Mặt la bàn ---------- */
+  function el(tag, attrs, parent) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function pol(r, deg) { var a = deg * Math.PI / 180; return [r * Math.sin(a), -r * Math.cos(a)]; }
+  function f2(n) { return n.toFixed(2); }
+  function arc(r1, r2, a1, a2) {
+    var p1 = pol(r2, a1), p2 = pol(r2, a2), p3 = pol(r1, a2), p4 = pol(r1, a1), lg = (a2 - a1) > 180 ? 1 : 0;
+    return 'M' + f2(p1[0]) + ',' + f2(p1[1]) + ' A' + r2 + ',' + r2 + ' 0 ' + lg + ' 1 ' + f2(p2[0]) + ',' + f2(p2[1]) +
+      ' L' + f2(p3[0]) + ',' + f2(p3[1]) + ' A' + r1 + ',' + r1 + ' 0 ' + lg + ' 0 ' + f2(p4[0]) + ',' + f2(p4[1]) + ' Z';
+  }
+  function txt(parent, s, r, deg, cls) {
+    var p = pol(r, deg);
+    var t = el('text', { x: f2(p[0]), y: f2(p[1]), 'class': cls, 'text-anchor': 'middle', 'dominant-baseline': 'central', transform: 'rotate(' + deg + ' ' + f2(p[0]) + ' ' + f2(p[1]) + ')' }, parent);
+    t.textContent = s;
+    return t;
+  }
+  function radial(parent, r1, r2, deg, cls) { var a = pol(r1, deg), b = pol(r2, deg); el('line', { x1: f2(a[0]), y1: f2(a[1]), x2: f2(b[0]), y2: f2(b[1]), 'class': cls }, parent); }
+
+  function buildDial() {
+    var svg = $('#dial'), i, c;
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var defs = el('defs', {}, svg), rg = el('radialGradient', { id: 'face', cx: '50%', cy: '44%', r: '62%' }, defs);
+    el('stop', { offset: '0%', 'stop-color': '#2c2016' }, rg);
+    el('stop', { offset: '100%', 'stop-color': '#120d09' }, rg);
+    var rot = el('g', { id: 'rot' }, svg);
+    el('circle', { cx: 0, cy: 0, r: 203, fill: 'url(#face)', stroke: '#d8ab52', 'stroke-width': 2 }, rot);
+    for (i = 0; i < 360; i++) radial(rot, 200, 200 - (i % 15 === 0 ? 11 : (i % 5 === 0 ? 7 : 3.5)), i, i % 15 === 0 ? 'tk b' : 'tk');
+    for (i = 0; i < 360; i += 15) txt(rot, String(i), 182, i, 'dn');
+    el('circle', { cx: 0, cy: 0, r: 174, 'class': 'ring' }, rot);
+    for (i = 0; i < 24; i++) { c = i * 15; el('path', { d: arc(132, 174, c - 7.5, c + 7.5), 'class': i % 2 === 0 ? 'sec chi' : 'sec can' }, rot); }
+    for (i = 0; i < 24; i++) { c = i * 15; txt(rot, FS.SON24[i][1], 160, c, 'han'); txt(rot, FS.SON24[i][0], 141, c, 'sn'); }
+    el('circle', { cx: 0, cy: 0, r: 132, 'class': 'ring' }, rot);
+    for (i = 0; i < 8; i++) {
+      c = i * 45;
+      var g = el('g', { transform: 'rotate(' + c + ')' }, rot), tri = FS.TRIGRAM[i];
+      for (var j = 0; j < 3; j++) {
+        var y = -(112 + j * 7);
+        if (tri[j]) el('line', { x1: -11, y1: y, x2: 11, y2: y, 'class': 'yao' }, g);
+        else { el('line', { x1: -11, y1: y, x2: -2.6, y2: y, 'class': 'yao' }, g); el('line', { x1: 2.6, y1: y, x2: 11, y2: y, 'class': 'yao' }, g); }
+      }
+      txt(rot, FS.QUAI8[i], 101, c, 'qn');
+      radial(rot, 94, 132, c + 22.5, 'div');
+    }
+    el('circle', { cx: 0, cy: 0, r: 94, 'class': 'ring' }, rot);
+    for (i = 0; i < 8; i++) { c = i * 45; txt(rot, D8[i], 84, c, i % 2 ? 'dir' : 'dir m'); radial(rot, 74, 94, c + 22.5, 'div'); }
+    el('circle', { cx: 0, cy: 0, r: 74, 'class': 'ring' }, rot);
+    el('g', { id: 'btRing' }, rot);
+    el('circle', { cx: 0, cy: 0, r: 50, 'class': 'ring' }, rot);
+    el('circle', { cx: 0, cy: 0, r: 49, fill: '#0d0a07' }, rot);
+    var tj = el('g', {}, rot);
+    el('circle', { cx: 0, cy: 0, r: 13, fill: '#f0e6cf' }, tj);
+    el('path', { d: 'M0,-13 A13,13 0 0,1 0,13 A6.5,6.5 0 0,1 0,0 A6.5,6.5 0 0,0 0,-13 Z', fill: '#130e0a' }, tj);
+    el('circle', { cx: 0, cy: -6.5, r: 2, fill: '#130e0a' }, tj);
+    el('circle', { cx: 0, cy: 6.5, r: 2, fill: '#f0e6cf' }, tj);
+    el('circle', { cx: 0, cy: 0, r: 13, fill: 'none', stroke: '#d8ab52', 'stroke-width': 1 }, tj);
+    el('polygon', { points: '0,-45 3.6,-16 -3.6,-16', fill: '#cf4433' }, rot);
+    el('polygon', { points: '0,45 3.6,16 -3.6,16', fill: '#f0e6cf', opacity: '.75' }, rot);
+    el('g', { id: 'dayMarks' }, rot);
+    var fx = el('g', {}, svg);
+    el('line', { x1: 0, y1: -206, x2: 0, y2: 206, 'class': 'thread' }, fx);
+    el('line', { x1: -206, y1: 0, x2: 206, y2: 0, 'class': 'thread' }, fx);
+    el('polygon', { points: '0,-197 -7,-212 7,-212', 'class': 'ptr' }, fx);
+  }
+  function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+  function renderBT() {
+    var g = $('#btRing'), a = S.prof ? FS.ageInfo(S.prof.y, S.prof.g) : null;
+    clear(g);
+    for (var i = 0; i < 8; i++) {
+      var c = i * 45;
+      if (!a) { el('path', { d: arc(50, 74, c - 22.5, c + 22.5), 'class': 'bt n' }, g); continue; }
+      var st = FS.BT_STARS[a.byDir[i]];
+      el('path', { d: arc(50, 74, c - 22.5, c + 22.5), 'class': 'bt ' + (st.g ? 'g' : 'b') }, g);
+      txt(g, st.n, 62, c, 'btt ' + (st.g ? 'g' : 'b'));
+    }
+  }
+  function renderMarks() {
+    var g = $('#dayMarks'), d = info().dirs;
+    clear(g);
+    [['hy', d.hy, -5], ['tai', d.tai, 0], ['hac', d.hac, 5]].forEach(function (m) {
+      if (m[1] < 0) return;
+      var p = pol(208, m[1] * 45 + m[2]);
+      el('circle', { cx: f2(p[0]), cy: f2(p[1]), r: 4.6, 'class': 'mk ' + m[0] }, g);
+    });
+  }
+  function applyRot() { $('#rot').setAttribute('transform', 'rotate(' + f2(-S.shown) + ')'); }
+  function setHeading(h) {
+    S.heading = ((h % 360) + 360) % 360; S.shown = S.heading; S.moved = true;
+    applyRot(); renderReadout(); syncDeg();
+  }
+  function syncDeg() {
+    var v = Math.round(S.heading) % 360, inp = $('#degInput');
+    if (document.activeElement !== inp) inp.value = v;
+    $('#degRange').value = v;
+  }
+  function renderReadout() {
+    var r = FS.readDir(S.heading), i = info(), n = [];
+    $('#degNum').textContent = (Math.round(S.heading) % 360) + '°';
+    $('#rdMain').innerHTML = 'Hướng <b>' + r.son + '</b> · ' + r.dir + ' · quái ' + r.quai + ' (' + r.hanh + ')';
+    $('#rdToa').textContent = 'Tọa ' + r.toaSon + ' hướng ' + r.son + ', lưng về ' + r.toaDir;
+    if (r.dkv) n.push(pill('bad', 'Đại không vong') + '<span>Nằm sát ranh giới hai quái. Nên xoay lệch thêm vài độ.</span>');
+    else if (r.kv) n.push(pill('mid', 'Tiểu không vong') + '<span>Sát ranh giới hai sơn. Nên chỉnh lệch 2–3°.</span>');
+    if (r.d8 === i.dirs.tai) n.push(pill('good', 'Tài thần') + '<span>Đúng hướng Tài thần ' + dayWord() + '.</span>');
+    if (r.d8 === i.dirs.hy) n.push(pill('good', 'Hỷ thần') + '<span>Đúng hướng Hỷ thần ' + dayWord() + '.</span>');
+    if (r.d8 === i.dirs.hac) n.push(pill('bad', 'Hạc thần') + '<span>Hướng Hạc thần ' + dayWord() + ': tránh xuất hành, cúng vái về hướng này.</span>');
+    if (S.prof) {
+      var a = FS.ageInfo(S.prof.y, S.prof.g), st = FS.BT_STARS[a.byDir[r.d8]];
+      n.push(pill(st.g ? 'good' : 'bad', st.n) + '<span>Với ' + profLabel(S.prof) + ' (cung ' + a.cung + '): ' + st.d + '</span>');
+    }
+    $('#rdNotes').innerHTML = n.map(function (x) { return '<div class="note">' + x + '</div>'; }).join('');
+  }
+  function renderDayDirs() {
+    var i = info(), goods = i.hours.filter(function (h) { return h.g; }).map(function (h) { return cn(h.chi); }).join(', ');
+    $('#dirTitle').textContent = 'Hướng tốt ' + dayWord();
+    var rows = [
+      ['hy', 'Hỷ thần', 'Niềm vui, may mắn. Hướng xuất hành, cúng vái.', i.dirs.hy],
+      ['tai', 'Tài thần', 'Tài lộc. Hướng mở hàng, cầu tài.', i.dirs.tai],
+      ['hac', 'Hạc thần (tránh)', 'Không xuất hành, không cúng vái về hướng này.', i.dirs.hac]
+    ];
+    $('#dayDirs').innerHTML = rows.map(function (r) {
+      var up = r[3] < 0, dir = up ? 'lên trời' : D8[r[3]], desc = up ? 'Hạc thần đang ở trên trời, ngày này không kiêng hướng nào.' : r[2];
+      var act = up ? '' : '<button class="btn sm" type="button" data-turn="' + (r[3] * 45) + '">Xoay tới</button>';
+      return '<div class="dirrow"><span class="sw ' + r[0] + '"></span><div class="what"><b>' + r[1] + ': ' + dir + '</b>' + desc + '</div>' + act + '</div>';
+    }).join('');
+    $('#dayStrip').innerHTML = '<span>Ngày <b>' + i.dayCC + '</b></span>' + pill(i.than.g ? 'good' : 'bad', (i.than.g ? 'Hoàng đạo ' : 'Hắc đạo ') + i.than.n) +
+      '<span class="muted">Giờ tốt: ' + goods + '</span><button class="btn sm ghost" type="button" data-go="xem-ngay">Xem chi tiết ngày</button>';
+  }
+  function renderMyDirs() {
+    var box = $('#myDirs');
+    if (!S.prof) {
+      box.innerHTML = '<h2>Hướng hợp tuổi</h2><p class="muted">Nhập năm sinh ở mục Tuổi &amp; hướng. Vòng trong của la bàn sẽ tô xanh 4 hướng tốt và đỏ 4 hướng xấu theo cung mệnh của bạn.</p><div style="margin-top:10px"><button class="btn" type="button" data-go="tuoi-huong">Nhập năm sinh</button></div>';
+      return;
+    }
+    var a = FS.ageInfo(S.prof.y, S.prof.g);
+    var chipsOf = function (ks, c) { return ks.map(function (k) { return '<span class="chip ' + c + '">' + FS.BT_STARS[k].n + ': ' + D8[a.stars[k]] + '</span>'; }).join(''); };
+    box.innerHTML = '<h2>Hướng hợp tuổi ' + profLabel(S.prof) + '</h2><p class="muted small">' + a.cc + ' · cung ' + a.cung + ' · ' + a.menh + '</p>' +
+      '<h3>4 hướng tốt</h3><div class="chips">' + chipsOf([0, 1, 2, 3], 'g') + '</div><h3>4 hướng xấu</h3><div class="chips">' + chipsOf([4, 5, 6, 7], 'b') + '</div>';
+  }
+
+  /* ---------- Cảm biến & xoay tay ---------- */
+  function sensorMsg(t) { $('#sensorMsg').textContent = t; }
+  function sensorStop() {
+    S.sensor = false;
+    window.removeEventListener('deviceorientationabsolute', onOrient, true);
+    window.removeEventListener('deviceorientation', onOrient, true);
+    $('#sensorBtn').textContent = 'Bật cảm biến la bàn';
+  }
+  function sensorStart() {
+    if (S.sensor) { sensorStop(); sensorMsg('Đã tắt cảm biến. Kéo xoay hoặc nhập số độ.'); return; }
+    var blocked = inFrame && OPEN_URL.indexOf('http') === 0
+      ? 'Trong ứng dụng Claude, cảm biến bị chặn. Mở bản dành cho trình duyệt ở khung bên dưới để la bàn tự xoay.'
+      : 'Không đọc được cảm biến la bàn. Kiểm tra quyền Chuyển động & hướng của trình duyệt, hoặc nhập số độ, kéo xoay mặt la bàn.';
+    function go() {
+      S.sensor = true; S.got = false;
+      window.addEventListener('deviceorientationabsolute', onOrient, true);
+      window.addEventListener('deviceorientation', onOrient, true);
+      $('#sensorBtn').textContent = 'Tắt cảm biến';
+      sensorMsg('Đang chờ tín hiệu cảm biến…');
+      setTimeout(function () { if (S.sensor && !S.got) { sensorStop(); sensorMsg(blocked); } }, 3000);
+    }
+    try {
+      if (typeof DeviceOrientationEvent === 'undefined') { sensorMsg(blocked); return; }
+      if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission().then(function (s) { if (s === 'granted') go(); else sensorMsg(blocked); }).catch(function () { sensorMsg(blocked); });
+      } else go();
+    } catch (e) { sensorMsg(blocked); }
+  }
+  function onOrient(e) {
+    var h = null;
+    if (typeof e.webkitCompassHeading === 'number' && !isNaN(e.webkitCompassHeading)) h = e.webkitCompassHeading;
+    else if ((e.absolute || e.type === 'deviceorientationabsolute') && typeof e.alpha === 'number') h = 360 - e.alpha;
+    if (h === null) return;
+    var so = 0;
+    try { so = (screen.orientation && screen.orientation.angle) || window.orientation || 0; } catch (x) {}
+    h = ((h + so) % 360 + 360) % 360;
+    var acc = typeof e.webkitCompassAccuracy === 'number' ? e.webkitCompassAccuracy : null, now = Date.now();
+    if (!S.got || now - (S.msgTs || 0) > 1500) {
+      S.msgTs = now;
+      if (acc !== null && (acc < 0 || acc > 20)) sensorMsg('La bàn của máy đang kém chính xác' + (acc > 0 ? ' (sai số ±' + Math.round(acc) + '°)' : '') + '. Cầm máy xoay theo hình số 8 vài vòng để hiệu chỉnh.');
+      else sensorMsg('Đang dùng cảm biến' + (acc !== null ? ' (sai số ±' + Math.round(acc) + '°)' : '') + '. Cầm máy nằm ngang, tránh xa vật bằng sắt thép.');
+    }
+    if (!S.got) { S.got = true; setHeading(h); return; }
+    var d = ((h - S.heading + 540) % 360) - 180;
+    if (Math.abs(d) > 0.3) setHeading(S.heading + d * 0.25);
+  }
+  function bindDrag() {
+    var svg = $('#dial'), last = null;
+    function ang(ev) { var r = svg.getBoundingClientRect(); return Math.atan2(ev.clientX - r.left - r.width / 2, -(ev.clientY - r.top - r.height / 2)) * 180 / Math.PI; }
+    svg.addEventListener('pointerdown', function (ev) {
+      last = ang(ev); S.moved = true;
+      if (S.sensor) { sensorStop(); sensorMsg('Đã chuyển sang xoay tay.'); }
+      try { svg.setPointerCapture(ev.pointerId); } catch (e) {}
+      ev.preventDefault();
+    });
+    svg.addEventListener('pointermove', function (ev) {
+      if (last === null) return;
+      var a = ang(ev), d = ((a - last + 540) % 360) - 180;
+      last = a; setHeading(S.heading - d);
+    });
+    var end = function () { last = null; };
+    svg.addEventListener('pointerup', end);
+    svg.addEventListener('pointercancel', end);
+    svg.addEventListener('lostpointercapture', end);
+  }
+  function intro() {
+    if (reduce) { S.shown = S.heading; applyRot(); return; }
+    var from = S.heading - 200, t0 = null, dur = 1700;
+    function step(ts) {
+      if (S.moved) return;
+      if (t0 === null) t0 = ts;
+      var k = Math.min(1, (ts - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      S.shown = from + (S.heading - from) * e + Math.sin(k * Math.PI * 4) * Math.pow(1 - k, 2) * 9;
+      applyRot();
+      if (k < 1) requestAnimationFrame(step); else { S.shown = S.heading; applyRot(); }
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* ---------- Xem ngày ---------- */
+  function renderDay() {
+    var i = info(), t = todayObj();
+    $('#dateInput').value = iso(S.date);
+    $('#dayHero').innerHTML =
+      '<div class="hero-day">' +
+        '<div class="col"><div class="lab">Dương lịch</div><div class="big">' + i.d + '</div><div>Tháng ' + i.m + ', ' + i.y + '</div><div class="muted small">' + i.wdName + (same(S.date, t) ? ' · hôm nay' : '') + '</div></div>' +
+        '<div class="col lunar"><div class="lab">Âm lịch</div><div class="big">' + i.lu.day + '</div><div>' + cap(monthName(i.lu)) + ' (' + (i.lu.monthLen === 30 ? 'đủ' : 'thiếu') + ')</div><div class="muted small">Năm ' + i.yearCC + ', tuổi ' + FS.GIAP[i.yChi] + '</div></div>' +
+      '</div>' +
+      '<div class="cc">Ngày <b>' + i.dayCC + '</b> · tháng <b>' + i.monthCC + '</b> · năm <b>' + i.yearCC + '</b></div>' +
+      '<div class="verdict">' + pill(i.than.g ? 'good' : 'bad', (i.than.g ? 'Hoàng đạo · ' : 'Hắc đạo · ') + i.than.n) + pill(i.verdict.c, 'Đánh giá chung: ' + i.verdict.t) + '</div>' +
+      (i.fest.length ? '<div class="verdict">' + i.fest.map(function (f) { return '<span class="chip">' + f + '</span>'; }).join('') + '</div>' : '');
+
+    var ts = FS.termSpan(i.jd), tS = ts.start, tN = ts.nextDate;
+    var kyHtml = i.ky.length ? i.ky.map(function (k) { return pill('bad', k.n) + '<span class="desc">' + k.d + '</span>'; }).join('<div style="height:6px"></div>') : '<span class="muted">Không phạm Tam Nương, Nguyệt Kỵ, Dương Công.</span>';
+    var scored = FS.ACTS.map(function (a) { return { n: a.n, s: FS.scoreFor(i, a.id).s }; });
+    var hop = scored.filter(function (x) { return x.s >= 2; }).map(function (x) { return x.n; });
+    var tranh = scored.filter(function (x) { return x.s <= -2; }).map(function (x) { return x.n; });
+    var truc = i.truc, trucPill = truc.r > 0 ? pill('good', 'Tốt') : (truc.r < 0 ? pill('bad', 'Xấu') : pill('mid', 'Bình thường'));
+    var age = '';
+    if (i.age) {
+      age = '<dt>Với tuổi bạn</dt><dd>' + (i.age.xung ? pill('bad', 'Xung tuổi') + '<span class="desc">Ngày ' + cn(i.dChi) + ' xung tuổi ' + cn(i.age.chi) + ' của ' + profLabel(S.prof) + '. Nên tránh việc lớn.</span>'
+        : (i.age.hop ? pill('good', 'Hợp tuổi, ' + i.age.kind) : '<span class="muted">Không xung, không hợp đặc biệt.</span>')) + '</dd>';
+    }
+    $('#dayDetail').innerHTML = '<h2>Tốt xấu trong ngày</h2><dl class="kv">' +
+      '<dt>Thần trực nhật</dt><dd><b>' + i.than.n + '</b> ' + pill(i.than.g ? 'good' : 'bad', i.than.g ? 'Hoàng đạo' : 'Hắc đạo') + '<span class="desc">' + i.than.d + '</span></dd>' +
+      '<dt>Trực</dt><dd><b>' + truc.n + '</b> ' + trucPill + '<span class="desc">Nên: ' + truc.nen + '.<br>Kiêng: ' + truc.kieng + '.</span></dd>' +
+      '<dt>Sao 28 tú</dt><dd><b>' + i.sao.full + '</b> ' + pill(i.sao.g ? 'good' : 'bad', i.sao.g ? 'Cát tú' : 'Hung tú') + '<span class="desc">' + i.sao.d + '.</span></dd>' +
+      '<dt>Tiết khí</dt><dd>' + ts.name + (ts.today ? ' (bắt đầu hôm nay)' : ' (từ ' + tS[0] + '/' + tS[1] + ')') + '<span class="desc">Tiết sau: ' + ts.next + ', ngày ' + tN[0] + '/' + tN[1] + '/' + tN[2] + '.</span></dd>' +
+      '<dt>Ngày kỵ</dt><dd>' + kyHtml + '</dd>' +
+      '<dt>Việc hợp</dt><dd>' + (hop.length ? hop.join(', ') : '<span class="muted">Không có việc lớn nào đạt mức tốt. Nếu buộc phải làm, chọn giờ hoàng đạo.</span>') + '</dd>' +
+      '<dt>Nên tránh</dt><dd>' + (tranh.length ? tranh.join(', ') : '<span class="muted">Không có việc nào phạm kỵ nặng.</span>') + '</dd>' +
+      '<dt>Tuổi xung</dt><dd>Tuổi ' + cn(i.xungChi) + ', nặng nhất ' + i.xungNang + '</dd>' +
+      '<dt>Tuổi hợp</dt><dd>' + i.tamHop.map(cn).join(', ') + ' (tam hợp), ' + cn(i.lucHop) + ' (lục hợp)</dd>' + age +
+      '<dt>Hướng</dt><dd>Hỷ thần: <b>' + D8[i.dirs.hy] + '</b> · Tài thần: <b>' + D8[i.dirs.tai] + '</b><span class="desc">Hạc thần (tránh): ' + (i.dirs.hac < 0 ? 'đang lên trời, không kiêng hướng' : D8[i.dirs.hac]) + '.</span>' +
+        '<div style="margin-top:8px"><button class="btn sm" type="button" data-go="la-ban">Xem trên la bàn</button></div></dd>' +
+      '</dl>';
+
+    var nowH = same(S.date, t) ? Math.floor(((new Date().getHours() + 1) % 24) / 2) : -1;
+    $('#dayHours').innerHTML = '<h2>Giờ hoàng đạo</h2><div class="hours">' + i.hours.map(function (h) {
+      return '<div class="hr' + (h.g ? ' g' : '') + (h.chi === nowH ? ' now' : '') + '"><div class="c">' + FS.CAN[h.can] + ' ' + cn(h.chi) + '</div><div class="t">' + hr(h.chi) + '</div><div class="n">' + h.than.n + '</div></div>';
+    }).join('') + '</div><p class="hint">Ô viền vàng là giờ hoàng đạo.' + (nowH >= 0 ? ' Ô viền đỏ là giờ hiện tại.' : '') + '</p>';
+
+    $('#dayLTP').innerHTML = '<h2>Giờ xuất hành theo Lý Thuần Phong</h2><div class="list">' + i.ltp.map(function (x) {
+      return '<div class="li"><div><b>' + x.s.n + '</b> ' + pill(x.s.g ? 'good' : 'bad', x.s.g ? 'Tốt' : 'Xấu') + '</div><div class="small muted">' + x.hours.map(hr).join(' và ') + '</div><div class="sub2">' + x.s.d + '</div></div>';
+    }).join('') + '</div>';
+
+    var up = FS.upcoming(i.jd, 70).slice(0, 7), tj = jdOf(t);
+    $('#dayUpcoming').innerHTML = '<h2>Ngày cúng và lễ sắp tới</h2><div class="list">' + (up.length ? up.map(function (u) {
+      var diff = u.jd - tj, when = diff === 0 ? 'hôm nay' : (diff > 0 ? 'còn ' + diff + ' ngày' : '');
+      return '<div class="li"><div><b>' + u.names.join(' · ') + '</b></div><button class="btn sm ghost" type="button" data-jd="' + u.jd + '">' + pad(u.d) + '/' + pad(u.m) + '</button><div class="sub2">' + FS.THU[(u.jd + 1) % 7] + ', ' + fmt(u) + ' · âm lịch ' + luStr(u.lu) + (when ? ' · ' + when : '') + '</div></div>';
+    }).join('') : '<p class="muted">Không có.</p>') + '</div>';
+  }
+  function renderCal() {
+    var y = S.view.y, m = S.view.m, t = todayObj();
+    $('#calTitle').textContent = 'Tháng ' + m + ', ' + y;
+    var first = FS.jdFromDate(1, m, y), next = m === 12 ? FS.jdFromDate(1, 1, y + 1) : FS.jdFromDate(1, m + 1, y);
+    var off = ((first + 1) % 7 + 6) % 7, cells = Math.ceil((off + next - first) / 7) * 7;
+    var h = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'].map(function (w) { return '<div class="wd" aria-hidden="true">' + w + '</div>'; }).join('');
+    for (var k = 0; k < cells; k++) {
+      var j = first - off + k, o = fromJd(j), i = FS.dayInfo(o.d, o.m, o.y, null);
+      var cls = 'cell' + (i.than.g ? ' hd' : '') + (i.ky.length ? ' ky' : '') + (i.wd === 0 ? ' sun' : '') + (o.m !== m ? ' out' : '') + (same(o, t) ? ' today' : '');
+      var l = i.lu.day === 1 ? '1/' + i.lu.month + (i.lu.leap ? 'n' : '') : String(i.lu.day);
+      var label = i.wdName + ' ' + fmt(o) + ', âm lịch ' + luStr(i.lu) + ', ' + (i.than.g ? 'hoàng đạo' : 'hắc đạo') + (i.ky.length ? ', ' + i.ky.map(function (x) { return x.n; }).join(', ') : '');
+      h += '<button type="button" class="' + cls + '" data-jd="' + j + '" data-stay="1" aria-pressed="' + (same(o, S.date) ? 'true' : 'false') + '" aria-label="' + label + '"><span class="s">' + o.d + '</span><span class="l' + (i.lu.day === 1 ? ' m1' : '') + '">' + l + '</span><span class="dot"></span></button>';
+    }
+    $('#cal').innerHTML = h;
+  }
+
+  /* ---------- Chọn ngày ---------- */
+  function renderPick() {
+    var act = $('#actSel').value || 'khai', n = parseInt($('#rangeSel').value, 10) || 30;
+    var from = parseIso($('#fromDate').value) || todayObj();
+    var useP = ($('#useProf').checked && S.prof) ? S.prof : null;
+    var actName = FS.ACTS.filter(function (a) { return a.id === act; })[0].n;
+    var rows = [], jd0 = jdOf(from);
+    for (var j = jd0; j < jd0 + n; j++) {
+      var o = fromJd(j), i = FS.dayInfo(o.d, o.m, o.y, useP), sc = FS.scoreFor(i, act);
+      rows.push({ i: i, s: sc.s, why: sc.why });
+    }
+    var list = rows.filter(function (r) { return r.s >= 2; }), msg;
+    if (list.length) msg = 'Có <b>' + list.length + ' ngày</b> hợp việc ' + actName.toLowerCase() + ' trong ' + n + ' ngày tính từ ' + fmt(from) + '.';
+    else {
+      list = rows.slice().sort(function (a, b) { return b.s - a.s; }).slice(0, 5).sort(function (a, b) { return a.i.jd - b.i.jd; });
+      msg = 'Không có ngày nào đạt mức hợp cho việc ' + actName.toLowerCase() + '. Dưới đây là 5 ngày khá nhất.';
+    }
+    var best = Math.max.apply(null, list.map(function (r) { return r.s; }));
+    $('#pickSummary').innerHTML = '<p>' + msg + (useP ? ' Đã tính theo tuổi ' + profLabel(useP) + '.' : '') + '</p>';
+    $('#pickList').innerHTML = list.map(function (r) {
+      var i = r.i, lv = r.s >= 4 ? ['good', 'Rất hợp'] : (r.s >= 2 ? ['good', 'Hợp'] : ['mid', 'Tạm được']);
+      var gh = i.hours.filter(function (h) { return h.g; }).map(function (h) { return cn(h.chi) + ' ' + hr(h.chi); }).join(', ');
+      return '<article class="pick' + (r.s === best && r.s >= 4 ? ' top' : '') + '"><div class="pd"><div class="n1">' + i.d + '</div><div class="n2">tháng ' + i.m + '</div></div><div>' +
+        '<div class="pt"><b>' + i.wdName + ', ' + fmt(i) + '</b>' + pill(lv[0], lv[1]) + '</div>' +
+        '<div class="small muted">Âm lịch ' + luStr(i.lu) + ' · ngày ' + i.dayCC + '</div>' +
+        '<div class="chips" style="margin-top:8px">' + r.why.map(function (w) { return '<span class="chip ' + (w.g ? 'g' : 'b') + '">' + w.t + '</span>'; }).join('') + '</div>' +
+        '<div class="ph">Giờ tốt: ' + gh + '</div>' +
+        '<div style="margin-top:8px"><button class="btn sm ghost" type="button" data-jd="' + i.jd + '">Xem chi tiết ngày</button></div></div></article>';
+    }).join('');
+  }
+  function syncProfUI() {
+    var cb = $('#useProf');
+    cb.disabled = !S.prof;
+    if (!S.prof) cb.checked = false;
+    $('#profLabel').textContent = S.prof ? '(' + profLabel(S.prof) + ')' : '(chưa lưu năm sinh)';
+  }
+
+  /* ---------- Tuổi & hướng ---------- */
+  function renderAge() {
+    var y = parseInt($('#byear').value, 10), vy = parseInt($('#vyear').value, 10), g = S.g, out = $('#ageOut');
+    if (!(y >= 1900 && y <= 2100)) { out.innerHTML = '<div class="card"><p class="muted">Nhập năm sinh âm lịch trong khoảng 1900 đến 2100.</p></div>'; $('#ageBanner').innerHTML = ''; return; }
+    if (!(vy >= 1900 && vy <= 2100)) vy = curLunarYear();
+    var a = FS.ageInfo(y, g), yc = FS.yearCheck(y, vy);
+    var saved = S.prof && S.prof.y === y && S.prof.g === g;
+    $('#ageBanner').innerHTML = saved ? '' : (S.prof ? 'Đang xem thử, chưa lưu. Đang dùng: ' + profLabel(S.prof) + '.' : 'Đây là ví dụ cho Nam 1990. Sửa năm sinh, chọn giới tính rồi bấm Lưu.');
+    var c1 = '<div class="card"><h2>' + a.cc + ' · tuổi ' + a.giap + '</h2><dl class="kv">' +
+      '<dt>Mệnh</dt><dd><b>' + a.hanh + '</b> · ' + a.napam + '<span class="desc">Nghĩa là ' + a.napamVN + '.</span></dd>' +
+      '<dt>Màu hợp</dt><dd>' + a.mau.hop + '</dd>' +
+      '<dt>Màu kỵ</dt><dd>' + a.mau.ky + '</dd>' +
+      '<dt>Cung phi</dt><dd><b>' + a.cung + '</b> (' + (g === 'nam' ? 'nam' : 'nữ') + ') · ' + a.menh + '</dd>' +
+      '<dt>Tuổi hợp</dt><dd>' + a.tamHop.map(cn).join(', ') + ' (tam hợp), ' + cn(a.lucHop) + ' (lục hợp)</dd>' +
+      '<dt>Tuổi kỵ</dt><dd>' + cn(a.xung) + ' (lục xung), ' + a.tuHanhXung.filter(function (c) { return c !== a.xung; }).map(cn).join(', ') + ' (tứ hành xung)</dd></dl></div>';
+    var order = [7, 0, 1, 6, -1, 2, 5, 4, 3];
+    var grid = order.map(function (d) {
+      if (d < 0) return '<div class="g9 c"><span class="hz">' + a.cungHan + '</span><span class="d">Cung ' + a.cung + '</span></div>';
+      var st = FS.BT_STARS[a.byDir[d]];
+      return '<div class="g9 ' + (st.g ? 'g' : 'b') + '"><span class="d">' + D8[d] + '</span><span class="st">' + st.n + '</span></div>';
+    }).join('');
+    var c2 = '<div class="card"><h2>Bát trạch: 8 hướng của cung ' + a.cung + '</h2><div class="grid9">' + grid + '</div><p class="hint">Bắc ở trên, như khi bạn đứng quay mặt về hướng Bắc.</p><div class="list" style="margin-top:8px">' +
+      [0, 1, 2, 3, 4, 5, 6, 7].map(function (k) { var st = FS.BT_STARS[k]; return '<div class="li"><div><b>' + st.n + '</b></div>' + pill(st.g ? 'good' : 'bad', D8[a.stars[k]]) + '<div class="sub2">' + st.d + ' Hợp đặt: ' + st.use + '.</div></div>'; }).join('') + '</div></div>';
+    var dirs = function (ks) { return ks.map(function (k) { return D8[a.stars[k]] + ' (' + FS.BT_STARS[k].n + ')'; }).join(', '); };
+    var c3 = '<div class="card"><h2>Đặt hướng trong nhà</h2><dl class="kv">' +
+      '<dt>Cửa chính</dt><dd>' + dirs([0, 2, 1]) + '</dd>' +
+      '<dt>Bàn thờ</dt><dd>Mặt bàn thờ nhìn ra ' + dirs([2, 1, 0, 3]) + '<span class="desc">Đo bằng cách đứng sát bàn thờ, lưng quay vào bàn thờ, nhìn thẳng ra trước.</span></dd>' +
+      '<dt>Bếp</dt><dd>Tọa hung hướng cát: đặt bếp ở phía ' + D8[a.stars[7]] + ' hoặc ' + D8[a.stars[5]] + ' của nhà, miệng bếp quay về ' + D8[a.stars[1]] + ' hoặc ' + D8[a.stars[0]] + '.</dd>' +
+      '<dt>Giường ngủ</dt><dd>Đầu giường quay về ' + dirs([1, 2]) + '</dd>' +
+      '<dt>Bàn làm việc</dt><dd>Ngồi nhìn về ' + dirs([0, 3]) + '</dd></dl></div>';
+    var klOk = !yc.kimLau, hoOk = yc.hoangOc ? yc.hoangOc.g : true, ttOk = !yc.tamTai;
+    var c4 = '<div class="card"><h2>Năm ' + vy + ' (' + yc.vyCC + ') · tuổi mụ ' + yc.age + '</h2><dl class="kv">' +
+      '<dt>Kim Lâu</dt><dd>' + (klOk ? pill('good', 'Không phạm') : pill('bad', 'Phạm') + '<span class="desc">' + yc.kimLau + '.</span>') + '</dd>' +
+      '<dt>Hoang Ốc</dt><dd>' + (yc.hoangOc ? pill(yc.hoangOc.g ? 'good' : 'bad', yc.hoangOc.n) : '<span class="muted">Chưa xét (dưới 10 tuổi)</span>') + '</dd>' +
+      '<dt>Tam Tai</dt><dd>' + (ttOk ? pill('good', 'Không phạm') : pill('bad', 'Phạm, năm thứ ' + yc.tamTai)) + '<span class="desc">Tuổi ' + cn(a.chi) + ' gặp tam tai vào các năm ' + yc.tamTaiYears.map(cn).join(', ') + '.</span></dd>' +
+      '<dt>Thái Tuế</dt><dd>' + (yc.thaiTue ? pill('mid', yc.thaiTue) : '<span class="muted">Không phạm</span>') + '</dd>' +
+      '<dt>Làm nhà</dt><dd>' + (klOk && hoOk && ttOk ? pill('good', 'Năm nay làm được') : pill('bad', 'Nên tránh hoặc mượn tuổi')) + '</dd>' +
+      '<dt>Cưới hỏi</dt><dd>' + (klOk ? pill('good', 'Không phạm Kim Lâu') : pill('bad', 'Phạm Kim Lâu')) + '<span class="desc">Dân gian thường xét Kim Lâu theo tuổi cô dâu.</span></dd>' +
+      '</dl></div>';
+    out.innerHTML = c1 + c2 + c3 + c4;
+  }
+  function setG(g) {
+    S.g = g;
+    $('#gNam').setAttribute('aria-pressed', g === 'nam' ? 'true' : 'false');
+    $('#gNu').setAttribute('aria-pressed', g === 'nu' ? 'true' : 'false');
+  }
+
+  /* ---------- Điều hướng ---------- */
+  var TABS = ['la-ban', 'xem-ngay', 'chon-ngay', 'tuoi-huong'];
+  function show(tab, push) {
+    if (TABS.indexOf(tab) < 0) tab = 'la-ban';
+    S.tab = tab;
+    TABS.forEach(function (t) {
+      $('#v-' + t).hidden = t !== tab;
+      $('#t-' + t).setAttribute('aria-selected', t === tab ? 'true' : 'false');
+    });
+    if (tab === 'chon-ngay') renderPick();
+    if (push && location.hash !== '#' + tab) { try { location.hash = tab; } catch (e) {} }
+  }
+  function setDate(o) {
+    S.date = o; S.view = { m: o.m, y: o.y }; cache = null;
+    renderAllDay();
+  }
+  function renderAllDay() { renderDay(); renderCal(); renderDayDirs(); renderMarks(); renderReadout(); }
+  function profChanged() { cache = null; renderBT(); renderMyDirs(); syncProfUI(); renderAllDay(); }
+
+  function convert() {
+    var d = parseInt($('#cvD').value, 10), m = parseInt($('#cvM').value, 10), y = parseInt($('#cvY').value, 10), l = $('#cvL').checked ? 1 : 0, out = $('#cvOut');
+    if (!(d >= 1 && d <= 30 && m >= 1 && m <= 12 && y >= 1900 && y <= 2100)) { out.textContent = 'Nhập ngày từ 1 đến 30, tháng từ 1 đến 12, năm từ 1900 đến 2100.'; return; }
+    var r = FS.lunar2solar(d, m, y, l);
+    if (!r) { out.textContent = 'Năm âm lịch ' + y + ' không có tháng ' + m + ' nhuận.'; return; }
+    var back = FS.solar2lunar(r[0], r[1], r[2]);
+    if (back.day !== d || back.month !== m || back.leap !== l) { out.textContent = 'Tháng ' + m + (l ? ' nhuận' : '') + ' năm ' + y + ' chỉ có 29 ngày.'; return; }
+    var o = { d: r[0], m: r[1], y: r[2] }, i = FS.dayInfo(o.d, o.m, o.y, null);
+    out.innerHTML = 'Ngày ' + d + '/' + m + (l ? ' nhuận' : '') + ' năm ' + y + ' âm lịch là <b>' + i.wdName + ', ' + fmt(o) + '</b>, ngày ' + i.dayCC + '. <button class="btn sm" type="button" data-jd="' + i.jd + '" style="margin-top:6px">Xem ngày này</button>';
+  }
+
+  function bindUI() {
+    document.addEventListener('click', function (ev) {
+      var t = ev.target.closest ? ev.target.closest('[data-tab],[data-jd],[data-go],[data-turn],[data-step]') : null;
+      if (!t) return;
+      if (t.hasAttribute('data-tab')) { show(t.getAttribute('data-tab'), true); return; }
+      if (t.hasAttribute('data-jd')) {
+        setDate(fromJd(parseInt(t.getAttribute('data-jd'), 10)));
+        if (!t.hasAttribute('data-stay')) { show('xem-ngay', true); window.scrollTo(0, 0); }
+        return;
+      }
+      if (t.hasAttribute('data-go')) { show(t.getAttribute('data-go'), true); window.scrollTo(0, 0); return; }
+      if (t.hasAttribute('data-turn')) {
+        if (S.sensor) { sensorMsg('Cảm biến đang bật: hãy xoay người tới khi chấm màu nằm dưới mũi tên đỏ.'); return; }
+        setHeading(parseFloat(t.getAttribute('data-turn')));
+        window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+        return;
+      }
+      if (t.hasAttribute('data-step')) { if (S.sensor) sensorStop(); setHeading(Math.round(S.heading) + parseInt(t.getAttribute('data-step'), 10)); }
+    });
+    window.addEventListener('hashchange', function () { show(location.hash.replace('#', ''), false); });
+    $('#sensorBtn').addEventListener('click', sensorStart);
+    $('#degInput').addEventListener('input', function () { var v = parseFloat(this.value); if (!isNaN(v)) { if (S.sensor) sensorStop(); setHeading(v); } });
+    $('#degRange').addEventListener('input', function () { if (S.sensor) sensorStop(); setHeading(parseFloat(this.value)); });
+    $('#prevDay').addEventListener('click', function () { setDate(fromJd(jdOf(S.date) - 1)); });
+    $('#nextDay').addEventListener('click', function () { setDate(fromJd(jdOf(S.date) + 1)); });
+    $('#todayBtn').addEventListener('click', function () { setDate(todayObj()); });
+    $('#dateInput').addEventListener('change', function () { var o = parseIso(this.value); if (o) setDate(o); });
+    $('#prevMonth').addEventListener('click', function () { S.view = S.view.m === 1 ? { m: 12, y: S.view.y - 1 } : { m: S.view.m - 1, y: S.view.y }; renderCal(); });
+    $('#nextMonth').addEventListener('click', function () { S.view = S.view.m === 12 ? { m: 1, y: S.view.y + 1 } : { m: S.view.m + 1, y: S.view.y }; renderCal(); });
+    ['actSel', 'rangeSel', 'fromDate', 'useProf'].forEach(function (id) { $('#' + id).addEventListener('change', renderPick); });
+    $('#cvGo').addEventListener('click', convert);
+    $('#byear').addEventListener('input', renderAge);
+    $('#vyear').addEventListener('input', renderAge);
+    $('#bdate').addEventListener('change', function () { var o = parseIso(this.value); if (o) { $('#byear').value = FS.solar2lunar(o.d, o.m, o.y).year; renderAge(); } });
+    $('#gNam').addEventListener('click', function () { setG('nam'); renderAge(); });
+    $('#gNu').addEventListener('click', function () { setG('nu'); renderAge(); });
+    $('#ageForm').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var y = parseInt($('#byear').value, 10);
+      if (!(y >= 1900 && y <= 2100)) { renderAge(); return; }
+      S.prof = { y: y, g: S.g }; store('fs.prof', S.prof);
+      $('#useProf').checked = true;
+      profChanged(); renderAge();
+      $('#saveProf').textContent = 'Đã lưu ' + profLabel(S.prof);
+      setTimeout(function () { $('#saveProf').textContent = 'Lưu, dùng cho la bàn và chọn ngày'; }, 2200);
+    });
+  }
+
+  var started = false;
+  function start(data) {
+    if (started) return;
+    started = true;
+    data = data || {};
+    if (data.date && data.date.y) S.date = data.date;
+    if (data.view && data.view.y) S.view = data.view;
+    if (typeof data.heading === 'number') S.heading = data.heading;
+    var lyNow = curLunarYear();
+    var sel = $('#actSel');
+    sel.innerHTML = FS.ACTS.map(function (a) { return '<option value="' + a.id + '">' + a.n + '</option>'; }).join('');
+    sel.value = data.act || 'khai';
+    $('#fromDate').value = iso(todayObj());
+    $('#useProf').checked = !!S.prof;
+    $('#byear').value = S.prof ? S.prof.y : 1990;
+    setG(S.prof ? S.prof.g : 'nam');
+    $('#vyear').value = lyNow;
+    $('#cvY').value = lyNow;
+    if (inFrame && OPEN_URL.indexOf('http') === 0) {
+      var fn = $('#frameNote');
+      fn.innerHTML = '<b>Muốn la bàn tự xoay theo máy?</b> Ứng dụng Claude chặn cảm biến. Mở bản dành cho trình duyệt: <a href="' + OPEN_URL + '" target="_blank" rel="noopener" style="color:var(--gold)">' + OPEN_URL.replace('https://', '').replace(/\/$/, '') + '</a>, rồi bấm Bật cảm biến. Trên iPhone, chọn Chia sẻ → Thêm vào MH chính để dùng như ứng dụng.';
+      fn.hidden = false;
+    }
+    buildDial(); bindDrag(); bindUI();
+    var t = todayObj(), ti = FS.dayInfo(t.d, t.m, t.y, null);
+    $('#todayLine').textContent = ti.wdName + ', ' + fmt(t) + ' · ngày ' + ti.lu.day + ' ' + monthName(ti.lu) + ' năm ' + ti.yearCC;
+    renderBT(); renderMyDirs(); syncProfUI(); renderAllDay(); renderAge(); syncDeg();
+    show((location.hash || '').replace('#', '') || data.tab || 'la-ban', false);
+    if (data.date) { S.shown = S.heading; applyRot(); } else intro();
+  }
+  try {
+    var hot = window.claude && window.claude.hot;
+    if (hot && typeof hot.snapshot === 'function') hot.snapshot(function () { return { tab: S.tab, date: S.date, view: S.view, heading: S.heading, act: $('#actSel').value }; });
+    if (hot && typeof hot.ready === 'function') { hot.ready(start); setTimeout(function () { start({}); }, 1500); }
+    else start((hot && hot.data) || {});
+  } catch (e) { start({}); }
+})();
+</script>
+</body>
+</html>
